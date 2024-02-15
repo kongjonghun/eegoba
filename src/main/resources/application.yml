@@ -1,0 +1,56 @@
+spring:
+  profiles:
+    active: local
+    group:
+      local:
+        - properties-local
+      develop:
+        - properties-develop
+
+server:
+  port: 8080
+  servlet:
+      context-path: /learn
+
+mybatis:
+  mapper-locations:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
