@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <Properties>
+        <Property name="applicationName">learn</Property>
+        <Property name="serviceName">eegoba</Property>
+        <Property name="dateProp">$${date:yyyy-MM-dd}</Property>
+    </Properties>
+
+    <Appenders>
+        <!-- 콜솔 -->
+        <Console name="console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{yyyy-MM-dd hh:mm:ss} %5p [%c] %m%n"/>
+        </Console>
+
+        <!-- 파일  -->
+        <RollingFile name ="RollingFile">
+            <FileName>./log/${serviceName}/${dateProp}/${serviceName}.log</FileName>
+            <FilePattern>./log/${serviceName}/${dateProp}/${serviceName}.%d{yyyy-MM-dd-hh-mm}.log</FilePattern>
+            <PatternLayout>
+                <Pattern>%d{yyyy-MM-dd HH:mm:ss} %5p [%c] %m%n</Pattern>
+            </PatternLayout>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval = "1" modulate = "true"/>
+            </Policies>
+        </RollingFile>
+
+        <RollingFile name ="RollingFileError">
+            <FileName>./log/${serviceName}/${dateProp}/${serviceName}_error.log</FileName>
+            <FilePattern>./log/${serviceName}/${dateProp}/${serviceName}_error.%d{yyyy-MM-dd-hh-mm}.log</FilePattern>
+            <PatternLayout>
+                <Pattern>%d{yyyy-MM-dd HH:mm:ss} %5p [%c] %m%n</Pattern>
+            </PatternLayout>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval = "1" modulate = "true"/>
+            </Policies>
+        </RollingFile>
+
+    </Appenders>
+
+    <loggers>
+        <root level="debug" additivity="true">
+            <AppenderRef ref="console"/>
+            <AppenderRef ref="RollingFile"/>
+            <AppenderRef ref="RollingFileError" level = "ERROR"/>
+        </root>
+    </loggers>
+
+</configuration>

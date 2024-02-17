@@ -10,14 +10,42 @@ spring:
 server:
   port: 8080
   servlet:
-      context-path: /learn
+      context-path: /eegoba
 
 mybatis:
-  mapper-locations:
+  mapper-locations: classpath:mapper/**/*.xml
+  config-location: classpath:mybatis/mybatis-config.xml
+  type-aliases-package: lgcns.eegoba.**.vo
 
+---
+spring.config.activate.on-profile: local
 
+spring:
+  datasource:
+    # MYSQL
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#    username:
+#    password:
 
+logging:
+  config: classpath:log4j2/log4j2.xml
+  level:
+    root: debug
 
+---
+spring.config.activate.on-profile: develop
+
+spring:
+  datasource:
+    # MYSQL
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#    username:
+#    password:
+
+logging:
+  config: classpath:log4j2/log4j2.xml
+  level:
+    root: debug
 
 
 

@@ -1,4 +1,4 @@
-package lgcns.learn.api.book.vo;
+package lgcns.eegoba.api.review.vo;
 
 import lombok.*;
 
@@ -7,6 +7,6 @@ import lombok.*;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class book {
+public class ReviewVO {
 
 }
