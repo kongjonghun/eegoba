@@ -15,17 +15,7 @@ server:
 mybatis:
   mapper-locations: classpath:mapper/**/*.xml
   config-location: classpath:mybatis/mybatis-config.xml
-  type-aliases-package: lgcns.eegoba.**.vo
-
----
-spring.config.activate.on-profile: local
-
-spring:
-  datasource:
-    # MYSQL
-#    driver-class-name: com.mysql.cj.jdbc.Driver
-#    username:
-#    password:
+  type-aliases-package: lgcns.eegoba.api.**.vo
 
 logging:
   config: classpath:log4j2/log4j2.xml
@@ -33,19 +23,26 @@ logging:
     root: debug
 
 ---
-spring.config.activate.on-profile: develop
-
 spring:
+  config:
+    activate:
+      on-profile: local
   datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/eegoba
+    username: root
+    password: Awslaunch!@#
+
+---
+#spring:
+#  config:
+#    activate:
+#      on-profile: develop
+#  datasource:
     # MYSQL
 #    driver-class-name: com.mysql.cj.jdbc.Driver
 #    username:
 #    password:
-
-logging:
-  config: classpath:log4j2/log4j2.xml
-  level:
-    root: debug
 
 
 

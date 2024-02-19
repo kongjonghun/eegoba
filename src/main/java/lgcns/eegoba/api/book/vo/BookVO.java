@@ -13,11 +13,10 @@ import java.util.List;
 @AllArgsConstructor
 public class BookVO {
 
-    private Integer bookId;
+    private Long bookId;
     private String title;
     private String author;
     private String publisher;
     private String imageUrl;
-    private List<ReviewVO> reviewVOList = new ArrayList<>();
-
+    private List<ReviewVO> reviewVOList;
 }

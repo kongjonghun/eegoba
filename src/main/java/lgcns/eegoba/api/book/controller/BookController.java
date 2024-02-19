@@ -7,7 +7,6 @@ import lgcns.eegoba.api.book.service.BookService;
 import lgcns.eegoba.common.constant.StatusConst;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.service.spi.ServiceException;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -26,8 +25,8 @@ public class BookController {
         try{
             // 로직 구현
             return ApiResponseVO.builder().code(StatusConst.Success.getStatus()).message(StatusConst.Success.getMessage()).build();
-        }catch (ServiceException se){
-            return ApiResponseVO.builder().code(StatusConst.InternalServerError.getStatus()).message(StatusConst.InternalServerError.getMessage()).build();
+        }catch (Exception e){
+            return ApiResponseVO.builder().code(StatusConst.InternalServerError.getStatus()).message(e.getMessage()).build();
         }
     }
 }
