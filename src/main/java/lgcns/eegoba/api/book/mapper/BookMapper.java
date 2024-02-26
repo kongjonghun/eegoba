@@ -9,7 +9,7 @@ public interface BookMapper {
 
   List<BookVO> getAllBooks();
 
-  BookVO getBookById(Integer bookId);
+  BookVO getBookById(Long bookId);
 
   List<String> getBookReviews(Integer bookId);
 }

@@ -15,6 +15,7 @@ public class BookVO {
   private String title;
   private String author;
   private String publisher;
+  private String isbn;
   private String imageUrl;
   private List<ReviewVO> reviewVOList;
 }

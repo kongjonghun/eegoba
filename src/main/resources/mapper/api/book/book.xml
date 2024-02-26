@@ -3,11 +3,11 @@
 <mapper namespace="lgcns.eegoba.api.book.mapper.BookMapper">
 
     <select id="getAllBooks" resultType="List">
-        SELECT * FROM books
+        SELECT * FROM tb_book
     </select>
 
     <select id="getBookById" resultType="lgcns.eegoba.api.book.vo.BookVO">
-        SELECT * FROM books WHERE book_id = #{bookId}
+        SELECT * FROM tb_book WHERE book_id = #{bookId}
     </select>
 
     <select id="getBookReviews" resultType="List">
