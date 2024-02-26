@@ -18,16 +18,22 @@ import org.springframework.web.client.HttpStatusCodeException;
 @RequestMapping(value = "/book")
 public class BookController {
 
-    private final BookService bookService;
+  private final BookService bookService;
 
-    @GetMapping(value = "")
-    public ApiResponseVO bookList(HttpServletRequest request, HttpServletResponse response) throws HttpStatusCodeException {
-        try{
-            // 로직 구현
-            return ApiResponseVO.builder().code(StatusConst.Success.getStatus()).message(StatusConst.Success.getMessage()).build();
-        }catch (Exception e){
-            return ApiResponseVO.builder().code(StatusConst.InternalServerError.getStatus()).message(e.getMessage()).build();
-        }
+  @GetMapping(value = "")
+  public ApiResponseVO bookList(HttpServletRequest request, HttpServletResponse response)
+      throws HttpStatusCodeException {
+    try {
+      // 로직 구현
+      return ApiResponseVO.builder()
+          .code(StatusConst.Success.getStatus())
+          .message(StatusConst.Success.getMessage())
+          .build();
+    } catch (Exception e) {
+      return ApiResponseVO.builder()
+          .code(StatusConst.InternalServerError.getStatus())
+          .message(e.getMessage())
+          .build();
     }
+  }
 }
-

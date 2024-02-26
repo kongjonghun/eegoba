@@ -1,10 +1,8 @@
 package lgcns.eegoba.api.book.vo;
 
+import java.util.List;
 import lgcns.eegoba.api.review.vo.ReviewVO;
 import lombok.*;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Data
 @Builder
@@ -13,10 +11,10 @@ import java.util.List;
 @AllArgsConstructor
 public class BookVO {
 
-    private Long bookId;
-    private String title;
-    private String author;
-    private String publisher;
-    private String imageUrl;
-    private List<ReviewVO> reviewVOList;
+  private Long bookId;
+  private String title;
+  private String author;
+  private String publisher;
+  private String imageUrl;
+  private List<ReviewVO> reviewVOList;
 }
