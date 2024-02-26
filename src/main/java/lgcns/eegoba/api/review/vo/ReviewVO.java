@@ -14,7 +14,7 @@ public class ReviewVO {
     private Long reviewId;
     private Long userId;
     private String content;
-    private int rating; // 추천:1, 비추천:0
+    private Boolean isRecommend;
     private Date createdAt;
     private Date updatedAt;
 
