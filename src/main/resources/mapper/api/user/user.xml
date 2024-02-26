@@ -37,4 +37,10 @@
         WHERE USR_EMAIL = #{usrEmail}
     </select>
 
+    <update id="updatePasswordByEmail" parameterType="lgcns.eegoba.api.user.vo.UserPasswordUpdateVO">
+        UPDATE TB_USER
+        SET USR_PW = #{usrPw}
+        WHERE USR_EMAIL = #{usrEmail};
+    </update>
+
 </mapper>

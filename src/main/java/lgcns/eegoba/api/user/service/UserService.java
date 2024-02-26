@@ -2,6 +2,7 @@ package lgcns.eegoba.api.user.service;
 
 import lgcns.eegoba.api.user.mapper.UserMapper;
 import lgcns.eegoba.api.user.vo.UserLoginRequestVO;
+import lgcns.eegoba.api.user.vo.UserPasswordUpdateVO;
 import lgcns.eegoba.api.user.vo.UserVO;
 import lgcns.eegoba.common.exception.ApiException;
 import lgcns.eegoba.common.exception.ExceptionEnum;
@@ -26,7 +27,7 @@ public class UserService {
   }
 
   public UserVO login(UserLoginRequestVO userLoginRequestVO) {
-    UserVO userVO = null;
+    UserVO userVO;
     userVO = userMapper.getUserByEmail(userLoginRequestVO.getUsrEmail());
     if (userVO == null) { // 사용자가 존재하지 않는 경우
       return userVO;
@@ -37,6 +38,17 @@ public class UserService {
     } else { // password 오류
       throw new ApiException(ExceptionEnum.ACCESS_DENIED_EXCEPTION);
     }
+  }
+
+  @Transactional
+  public void updatePassword(UserPasswordUpdateVO userPasswordUpdateVO) {
+    UserVO userVO;
+    userVO = userMapper.getUserByEmail(userPasswordUpdateVO.getUsrEmail());
+    if (passwordEncoder.matches(userPasswordUpdateVO.getUsrPw(), userVO.getUsrPw())) {
+      throw new ApiException(ExceptionEnum.PASSWORD_VALIDATION_FAILED);
+    }
+    userPasswordUpdateVO.setUsrPw(passwordEncoder.encode(userPasswordUpdateVO.getUsrPw()));
+    userMapper.updatePasswordByEmail(userPasswordUpdateVO);
   }
 
   // pw check를 backend에서 할 경우 사용 예정(미사용 시 삭제 예정)
