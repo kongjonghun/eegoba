@@ -1,5 +1,6 @@
 package lgcns.eegoba.api.review.vo;
 
+import lgcns.eegoba.api.review.model.ContentType;
 import lombok.*;
 import java.util.Date;
 
@@ -10,10 +11,12 @@ import java.util.Date;
 @AllArgsConstructor
 public class ReviewVO {
 
-    private Long bookId;
     private Long reviewId;
+    private ContentType contentType;
+    private Long bookId;
+    private Long lectureId;
     private Long userId;
-    private String content;
+    private String reviewContent;
     private Boolean isRecommend;
     private Date createdAt;
     private Date updatedAt;
