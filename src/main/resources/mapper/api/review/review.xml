@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="lgcns.eegoba.api.review.mapper.ReviewMapper">
+
+    <select id="getReviewCount" resultType="int">
+        SELECT COUNT(*)
+        FROM TB_REVIEW
+        WHERE USE_YN = 'Y'
+    </select>
+
+    <select id="getAllReviews" resultType="lgcns.eegoba.api.review.vo.ReviewVO">
+        SELECT REVIEW_ID
+             , CONTENT_TYPE
+             , BOOK_ID
+             , LECTURE_ID
+             , USER_ID
+             , REVIEW_CONTENT
+             , IS_RECOMMEND
+             , CREATED_AT
+             , UPDATED_AT
+        FROM TB_REVIEW
+        WHERE USE_YN = 'Y'
+    </select>
+
+    <select id="getReviewByReviewId" resultType="lgcns.eegoba.api.review.vo.ReviewVO">
+        SELECT REVIEW_ID
+             , CONTENT_TYPE
+             , BOOK_ID
+             , LECTURE_ID
+             , USER_ID
+             , REVIEW_CONTENT
+             , IS_RECOMMEND
+             , CREATED_AT
+             , UPDATED_AT
+        FROM TB_REVIEW
+        WHERE REVIEW_ID = #{reviewId}
+            AND USE_YN = 'Y'
+    </select>
+
+    <select id="getReviewByUserId" resultType="lgcns.eegoba.api.review.vo.ReviewVO">
+        SELECT REVIEW_ID
+             , CONTENT_TYPE
+             , BOOK_ID
+             , LECTURE_ID
+             , USER_ID
+             , REVIEW_CONTENT
+             , IS_RECOMMEND
+             , CREATED_AT
+             , UPDATED_AT
+        FROM TB_REVIEW
+        WHERE USER_ID = #{userId}
+          AND USE_YN = 'Y'
+    </select>
+
+    <insert id="insertReview" parameterType="lgcns.eegoba.api.review.vo.ReviewVO">
+        INSERT INTO TB_REVIEW (
+           CONTENT_TYPE
+            , BOOK_ID
+            , LECTURE_ID
+            , USER_ID
+            , REVIEW_CONTENT
+            , IS_RECOMMEND
+            , CREATED_AT
+            , UPDATED_AT
+            , USE_YN)
+        VALUES (
+            #{contentType}
+            , #{bookId}
+            , #{lectureId}
+            , #{userId}
+            , #{reviewContent}
+            , #{isRecommend}
+            , NOW()
+            , NOW()
+            , 'Y')
+    </insert>
+
+    <update id="updateReview" parameterType="lgcns.eegoba.api.review.vo.ReviewVO">
+        UPDATE TB_REVIEW
+        SET CONTENT_TYPE = #{contentType}
+          , BOOK_ID = #{bookId}
+          , LECTURE_ID = #{lectureId}
+          , REVIEW_CONTENT = #{reviewContent}
+          , IS_RECOMMEND = #{isRecommend}
+          , UPDATED_AT = NOW()
+        WHERE REVIEW_ID = #{reviewId}
+    </update>
+
+    <update id="deleteReview" parameterType="long">
+        UPDATE TB_REVIEW
+        SET UPDATED_AT = NOW()
+          , USE_YN = 'N'
+        WHERE REVIEW_ID = #{reviewId}
+    </update>
+</mapper>
