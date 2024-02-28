@@ -2,6 +2,7 @@ plugins {
 	id 'java'
 	id 'org.springframework.boot' version '3.2.2'
 	id 'io.spring.dependency-management' version '1.1.4'
+	id "com.diffplug.spotless" version "6.25.0"
 }
 
 group = 'lgcns'
@@ -32,19 +33,24 @@ dependencies {
 	implementation 'mysql:mysql-connector-java:8.0.33'
 	// log4j2
 	implementation 'org.springframework.boot:spring-boot-starter-log4j2'
-//	// jpa
+	// web
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	// my-batis
+	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.3'
+	// JBCrypt
+	implementation group: 'org.mindrot', name: 'jbcrypt', version: '0.3m'
+
+
+	//	// jpa
 //	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 //	// oauth
 //	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
 //	implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
 //	// security
 //	implementation 'org.springframework.boot:spring-boot-starter-security'
-	// web
-	implementation 'org.springframework.boot:spring-boot-starter-web'
-	// my-batis
-	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.3'
 //	// session
 //	implementation 'org.springframework.session:spring-session-core'
+
 	// lombok
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
@@ -52,6 +58,25 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter-test:3.0.3'
 	//testImplementation 'org.springframework.security:spring-security-test'
+
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+
+}
+
+spotless {
+	java {
+		removeUnusedImports()
+		trimTrailingWhitespace()
+		indentWithTabs(4)
+		endWithNewline()
+		googleJavaFormat()
+	}
+	format 'misc', {
+		target '**/*.gradle', '**/*.md', '**/.gitignore'
+		trimTrailingWhitespace()
+		indentWithTabs(2)
+		endWithNewline()
+	}
 }
 
 tasks.named('test') {
