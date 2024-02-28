@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 public class SaltUtil {
 
   /**
-   * 비밀번호를 Bcrypt 암호화한다.
+   * 비밀번호를 Bcrypt 암호. *화한다
    *
    * @param salt
    * @param password
