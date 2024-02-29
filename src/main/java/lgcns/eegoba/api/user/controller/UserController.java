@@ -1,6 +1,5 @@
 package lgcns.eegoba.api.user.controller;
 
-import lgcns.eegoba.common.response.ApiResponseVO;
 import lgcns.eegoba.api.user.service.UserService;
 import lgcns.eegoba.api.user.vo.UserLoginRequestVO;
 import lgcns.eegoba.api.user.vo.UserPasswordUpdateVO;
@@ -8,6 +7,7 @@ import lgcns.eegoba.api.user.vo.UserVO;
 import lgcns.eegoba.common.constant.StatusConst;
 import lgcns.eegoba.common.exception.ApiException;
 import lgcns.eegoba.common.exception.ExceptionEnum;
+import lgcns.eegoba.common.response.ApiResponseVO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
