@@ -1,6 +1,6 @@
 package lgcns.eegoba.api.user.controller;
 
-import lgcns.eegoba.api.base.vo.ApiResponseVO;
+import lgcns.eegoba.common.response.ApiResponseVO;
 import lgcns.eegoba.api.user.service.UserService;
 import lgcns.eegoba.api.user.vo.UserLoginRequestVO;
 import lgcns.eegoba.api.user.vo.UserPasswordUpdateVO;

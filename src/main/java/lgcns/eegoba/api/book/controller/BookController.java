@@ -3,7 +3,7 @@ package lgcns.eegoba.api.book.controller;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
-import lgcns.eegoba.api.base.vo.ApiResponseVO;
+import lgcns.eegoba.common.response.ApiResponseVO;
 import lgcns.eegoba.api.book.service.BookService;
 import lgcns.eegoba.api.book.vo.BookVO;
 import lgcns.eegoba.common.constant.StatusConst;
