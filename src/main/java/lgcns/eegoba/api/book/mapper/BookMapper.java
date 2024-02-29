@@ -8,15 +8,13 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface BookMapper {
 
-  BookVO getBookById(Long bookId);
+  BookVO getBookById(Integer bookId);
 
   List<BookVO> getBookList();
 
-  void addBook(BookVO bookVO);
-
-  void deleteBook(Long bookId);
+  void insertBook(BookVO bookVO);
 
   void updateBook(BookVO bookVO);
 
-  List<ReviewVO> getBookReviewListByBookId(Long bookId);
+  List<ReviewVO> getBookReviewListByBookId(Integer bookId);
 }

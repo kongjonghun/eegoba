@@ -6,6 +6,7 @@ import java.util.List;
 import lgcns.eegoba.api.base.vo.ApiResponseVO;
 import lgcns.eegoba.api.book.service.BookService;
 import lgcns.eegoba.api.book.vo.BookVO;
+import lgcns.eegoba.api.review.vo.ReviewVO;
 import lgcns.eegoba.common.constant.StatusConst;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,7 +22,7 @@ public class BookController {
   private final BookService bookService;
 
   @GetMapping(value = "/{bookId}")
-  public ApiResponseVO<Object> getBook(@PathVariable(value = "bookId") Long bookId)
+  public ApiResponseVO<Object> getBookById(@PathVariable(value = "bookId") Integer bookId)
       throws HttpStatusCodeException {
     try {
       BookVO book = bookService.getBookById(bookId);
@@ -60,21 +61,75 @@ public class BookController {
     }
   }
 
-  @PostMapping(value = "/addBook")
-  public ApiResponseVO<Object> addBook(@RequestBody BookVO bookVO) throws HttpStatusCodeException {
+  @PostMapping(value = "/create")
+  public ApiResponseVO<Object> createBook(@RequestBody BookVO bookVO)
+      throws HttpStatusCodeException {
     try {
       if (bookService.getBookById(bookVO.getBookId()) != null) {
         return ApiResponseVO.builder()
             .code(StatusConst.BadRequest.getStatus())
-            .message("이미 존재합니다.")
+            .message("Data already exist.")
             .build();
       }
-      bookService.addBook(bookVO);
+      bookService.createBook(bookVO);
 
       return ApiResponseVO.builder()
           .code(StatusConst.Success.getStatus())
           .message(StatusConst.Success.getMessage())
           .result(bookVO)
+          .build();
+    } catch (Exception e) {
+      return ApiResponseVO.builder()
+          .code(StatusConst.InternalServerError.getStatus())
+          .message(e.getMessage())
+          .build();
+    }
+  }
+
+  @PutMapping(value = "/update/{bookId}")
+  public ApiResponseVO<Object> updateBook(
+      @PathVariable(value = "bookId") Integer bookId, @RequestBody BookVO bookVO)
+      throws HttpStatusCodeException {
+    try {
+      if (bookService.getBookById(bookId) == null) {
+        return ApiResponseVO.builder()
+            .code(StatusConst.BadRequest.getStatus())
+            .message("Data not exist.")
+            .build();
+      }
+
+      bookService.updateBook(bookVO);
+
+      return ApiResponseVO.builder()
+          .code(StatusConst.Success.getStatus())
+          .message(StatusConst.Success.getMessage())
+          .result(bookVO)
+          .build();
+    } catch (Exception e) {
+      return ApiResponseVO.builder()
+          .code(StatusConst.InternalServerError.getStatus())
+          .message(e.getMessage())
+          .build();
+    }
+  }
+
+  @PutMapping(value = "/review/{bookId}")
+  public ApiResponseVO<Object> getReviewListByBookId(@PathVariable(value = "bookId") Integer bookId)
+      throws HttpStatusCodeException {
+    try {
+      if (bookService.getBookById(bookId) == null) {
+        return ApiResponseVO.builder()
+            .code(StatusConst.BadRequest.getStatus())
+            .message("Data not exist.")
+            .build();
+      }
+
+      List<ReviewVO> reviewList = bookService.getReviewListByBookId(bookId);
+
+      return ApiResponseVO.builder()
+          .code(StatusConst.Success.getStatus())
+          .message(StatusConst.Success.getMessage())
+          .result(reviewList)
           .build();
     } catch (Exception e) {
       return ApiResponseVO.builder()
