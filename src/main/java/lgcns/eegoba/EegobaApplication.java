@@ -6,10 +6,9 @@ import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfi
 
 // Spring Security Redirect 로그인 페이지 해제
 @SpringBootApplication(exclude = {SecurityAutoConfiguration.class})
-public class LearnApplication {
+public class EegobaApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(LearnApplication.class, args);
-	}
-
+  public static void main(String[] args) {
+    SpringApplication.run(EegobaApplication.class, args);
+  }
 }
