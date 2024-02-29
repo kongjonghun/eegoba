@@ -8,6 +8,7 @@ import lgcns.eegoba.api.book.service.BookService;
 import lgcns.eegoba.api.book.vo.BookVO;
 import lgcns.eegoba.api.review.vo.ReviewVO;
 import lgcns.eegoba.common.constant.StatusConst;
+import lgcns.eegoba.common.response.ApiResponseVO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;

@@ -1,4 +1,4 @@
-package lgcns.eegoba.api.base.vo;
+package lgcns.eegoba.common.response;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
