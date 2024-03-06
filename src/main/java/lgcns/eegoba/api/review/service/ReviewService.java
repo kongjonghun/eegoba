@@ -31,8 +31,8 @@ public class ReviewService {
     return reviewMapper.getReviewListByUserId(userId);
   }
 
-  public ReviewVO getReviewByReviewId(Long reviewId) {
-    return reviewMapper.getReviewByReviewId(reviewId);
+  public ReviewVO getReviewById(Long reviewId) {
+    return reviewMapper.getReviewById(reviewId);
   }
 
   public int saveReview(ReviewVO reviewVO) {

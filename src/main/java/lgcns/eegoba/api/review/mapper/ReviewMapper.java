@@ -11,7 +11,7 @@ public interface ReviewMapper {
 
   List<ReviewVO> getReviewList();
 
-  ReviewVO getReviewByReviewId(Long reviewId);
+  ReviewVO getReviewById(Long reviewId);
 
   List<ReviewVO> getReviewListByUserId(Long userId);
 

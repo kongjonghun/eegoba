@@ -22,7 +22,7 @@
         WHERE USE_YN = 'Y'
     </select>
 
-    <select id="getReviewByReviewId" resultType="ReviewVO">
+    <select id="getReviewById" resultType="ReviewVO">
         SELECT REVIEW_ID
              , CONTENT_TYPE
              , BOOK_ID

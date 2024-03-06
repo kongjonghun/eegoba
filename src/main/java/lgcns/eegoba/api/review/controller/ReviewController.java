@@ -37,9 +37,9 @@ public class ReviewController {
   }
 
   @GetMapping("/{reviewId}")
-  public ApiResponseVO<Object> getReviewByReviewId(@PathVariable Long reviewId) {
+  public ApiResponseVO<Object> getReviewById(@PathVariable Long reviewId) {
     try {
-      ReviewVO reviewVO = reviewService.getReviewByReviewId(reviewId);
+      ReviewVO reviewVO = reviewService.getReviewById(reviewId);
 
       return ApiResponseVO.builder()
           .code(StatusConst.Success.getStatus())
