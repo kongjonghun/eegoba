@@ -1,12 +1,15 @@
-package lgcns.eegoba.common.exception;
+package lgcns.eegoba.common.advice;
 
 import jakarta.servlet.http.HttpServletRequest;
+import lgcns.eegoba.common.exception.ApiException;
+import lgcns.eegoba.common.exception.ApiExceptionEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice
-public class ApiExceptionHandler {
+public class ExceptionHandlingController {
+
   @ExceptionHandler({ApiException.class})
   public ResponseEntity<ApiExceptionEntity> exceptionHandler(
       HttpServletRequest request, final ApiException e) {
@@ -43,15 +46,5 @@ public class ApiExceptionHandler {
   //                .build());
   //  }
   //
-  //  @ExceptionHandler({Exception.class})
-  //  public ResponseEntity<ApiExceptionEntity> exceptionHandler(
-  //      HttpServletRequest request, final Exception e) {
-  //    e.printStackTrace();
-  //    return ResponseEntity.status(ExceptionEnum.INTERNAL_SERVER_ERROR.getStatus())
-  //        .body(
-  //            ApiExceptionEntity.builder()
-  //                .errorCode(ExceptionEnum.INTERNAL_SERVER_ERROR.getCode())
-  //                .errorMessage(e.getMessage())
-  //                .build());
-  //  }
+
 }

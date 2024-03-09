@@ -1,9 +1,9 @@
 package lgcns.eegoba.common.utils;
 
+import lombok.experimental.UtilityClass;
 import org.mindrot.jbcrypt.BCrypt;
-import org.springframework.stereotype.Service;
 
-@Service
+@UtilityClass
 public class SaltUtil {
 
   /**
