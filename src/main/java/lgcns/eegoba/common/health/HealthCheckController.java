@@ -14,7 +14,6 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.client.HttpStatusCodeException;
 
 @RestController("HealthCheckController")
 @Scope(value = "request", proxyMode = ScopedProxyMode.TARGET_CLASS)
@@ -28,7 +27,7 @@ public class HealthCheckController {
 
   @GetMapping(value = "/health")
   public ApiResponse healthCheck(HttpServletRequest request, HttpServletResponse response)
-      throws HttpStatusCodeException {
+      throws Exception {
     try {
       StringBuilder message = new StringBuilder();
       message
@@ -38,21 +37,13 @@ public class HealthCheckController {
           .append(":")
           .append(activeProfile);
 
-      HealthCheck healthCheckVO = new HealthCheck();
-      healthCheckVO.setStatus(ResultCode.Success.getStatus());
-      healthCheckVO.setCode(ResultCode.Success.getCode());
-      healthCheckVO.setMessage(message.toString());
-      healthCheckVO.setDbConnection(healthCheckService.healthCheck()); // DB Connection OK이면 1
+      healthCheckService.healthCheck();
 
-      return healthCheckVO;
+      // DB Connection 성공일 경우 result = 1
+      return new ApiResponse(ResultCode.Success, message.toString(), 1);
     } catch (Exception e) {
-      HealthCheck healthCheckVO = new HealthCheck();
-      healthCheckVO.setStatus(ErrorCode.InternalServerError.getStatus());
-      healthCheckVO.setCode(ErrorCode.InternalServerError.getCode());
-      healthCheckVO.setMessage(e.getMessage());
-      healthCheckVO.setDbConnection("0"); // DB Connection X이면 0
-
-      return healthCheckVO;
+      // DB Connection 실패일 경우 result = 0
+      return new ApiResponse(ErrorCode.InternalServerError, "DB Connection Fail", 0);
     }
   }
 

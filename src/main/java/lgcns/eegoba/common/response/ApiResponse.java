@@ -20,14 +20,13 @@ public class ApiResponse<T> {
   @JsonInclude(JsonInclude.Include.NON_NULL)
   private T result;
 
-  // ResultCode : result 값이 없을 경우
+  /* ResultCode */
   public ApiResponse(ResultCode resultCode) {
     this.status = resultCode.getStatus();
     this.code = resultCode.getCode();
     this.message = resultCode.getMessage();
   }
 
-  // ResultCode : 정상일 경우 ApiResponse
   public ApiResponse(ResultCode resultCode, T result) {
     this.status = resultCode.getStatus();
     this.code = resultCode.getCode();
@@ -35,11 +34,32 @@ public class ApiResponse<T> {
     this.result = result;
   }
 
-  // ErrorCode : 에러일 경우 ApiResponse
+  public ApiResponse(ResultCode resultCode, String message, T result) {
+    this.status = resultCode.getStatus();
+    this.code = resultCode.getCode();
+    this.message = message;
+    this.result = result;
+  }
+
+  /* ErrorCode */
+  public ApiResponse(ErrorCode errorCode) {
+    this.status = errorCode.getStatus();
+    this.code = errorCode.getCode();
+    this.message = errorCode.getMessage();
+    this.result = result;
+  }
+
   public ApiResponse(ErrorCode errorCode, T result) {
     this.status = errorCode.getStatus();
     this.code = errorCode.getCode();
     this.message = errorCode.getMessage();
+    this.result = result;
+  }
+
+  public ApiResponse(ErrorCode errorCode, String message, T result) {
+    this.status = errorCode.getStatus();
+    this.code = errorCode.getCode();
+    this.message = message;
     this.result = result;
   }
 }

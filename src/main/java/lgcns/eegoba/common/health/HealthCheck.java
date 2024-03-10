@@ -6,6 +6,4 @@ import lombok.EqualsAndHashCode;
 
 @Data
 @EqualsAndHashCode(callSuper = false)
-public class HealthCheck extends ApiResponse {
-  private String dbConnection;
-}
+public class HealthCheck extends ApiResponse {}
