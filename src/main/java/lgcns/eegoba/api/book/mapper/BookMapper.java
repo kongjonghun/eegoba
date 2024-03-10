@@ -8,7 +8,7 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface BookMapper {
 
-  BookVO getBookById(Integer bookId);
+  BookVO getBookById(Long bookId);
 
   List<BookVO> getBookList();
 
@@ -16,5 +16,5 @@ public interface BookMapper {
 
   void updateBook(BookVO bookVO);
 
-  List<ReviewVO> getBookReviewListByBookId(Integer bookId);
+  List<ReviewVO> getBookReviewListByBookId(Long bookId);
 }

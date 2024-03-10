@@ -11,7 +11,7 @@ import lombok.*;
 @AllArgsConstructor
 public class BookVO {
 
-  private Integer bookId;
+  private Long bookId;
   private String title;
   private String author;
   private String publisher;
