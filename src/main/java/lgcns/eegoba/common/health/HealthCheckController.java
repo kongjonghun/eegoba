@@ -5,8 +5,9 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.Arrays;
-import lgcns.eegoba.common.constant.StatusConst;
-import lgcns.eegoba.common.response.ApiResponseVO;
+import lgcns.eegoba.common.constant.ErrorCode;
+import lgcns.eegoba.common.constant.ResultCode;
+import lgcns.eegoba.common.response.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
@@ -26,7 +27,7 @@ public class HealthCheckController {
   private String activeProfile;
 
   @GetMapping(value = "/health")
-  public ApiResponseVO healthCheck(HttpServletRequest request, HttpServletResponse response)
+  public ApiResponse healthCheck(HttpServletRequest request, HttpServletResponse response)
       throws HttpStatusCodeException {
     try {
       StringBuilder message = new StringBuilder();
@@ -37,15 +38,17 @@ public class HealthCheckController {
           .append(":")
           .append(activeProfile);
 
-      HealthCheckVO healthCheckVO = new HealthCheckVO();
-      healthCheckVO.setCode(StatusConst.Success.getStatus());
+      HealthCheck healthCheckVO = new HealthCheck();
+      healthCheckVO.setStatus(ResultCode.Success.getStatus());
+      healthCheckVO.setCode(ResultCode.Success.getCode());
       healthCheckVO.setMessage(message.toString());
       healthCheckVO.setDbConnection(healthCheckService.healthCheck()); // DB Connection OK이면 1
 
       return healthCheckVO;
     } catch (Exception e) {
-      HealthCheckVO healthCheckVO = new HealthCheckVO();
-      healthCheckVO.setCode(StatusConst.InternalServerError.getStatus());
+      HealthCheck healthCheckVO = new HealthCheck();
+      healthCheckVO.setStatus(ErrorCode.InternalServerError.getStatus());
+      healthCheckVO.setCode(ErrorCode.InternalServerError.getCode());
       healthCheckVO.setMessage(e.getMessage());
       healthCheckVO.setDbConnection("0"); // DB Connection X이면 0
 
