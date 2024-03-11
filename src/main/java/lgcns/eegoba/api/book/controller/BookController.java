@@ -2,7 +2,8 @@ package lgcns.eegoba.api.book.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
+import java.util.List;
+import lgcns.eegoba.api.base.vo.ApiResponseVO;
 import lgcns.eegoba.api.book.service.BookService;
 import lgcns.eegoba.api.book.vo.BookVO;
 import lgcns.eegoba.common.constant.ErrorCode;
@@ -24,15 +25,26 @@ public class BookController {
 
   private final BookService bookService;
 
+  @GetMapping(value = "/{bookId}")
+  public ApiResponse getBookById(@PathVariable(value = "bookId") Integer bookId)
+      throws Exception {
+    try {
+      BookVO book = bookService.getBookById(bookId);
+
+      // 로직 구현
+        return new ApiResponse<>(ResultCode.Success, book);
+    } catch (ApiException e) {
+        throw new ApiException(ErrorCode.InternalServerError);
+    } catch (Exception e) {
+        throw new Exception(e);
+    }
+  }
+
   @GetMapping(value = "")
   public ApiResponse getBookList(HttpServletRequest request, HttpServletResponse response)
       throws Exception {
     try {
-      ArrayList<BookVO> bookList = new ArrayList<>();
-      bookList.add(BookVO.builder().bookId(1L).build());
-      bookList.add(BookVO.builder().bookId(2L).build());
-      bookList.add(BookVO.builder().bookId(3L).build());
-      bookList.add(BookVO.builder().bookId(4L).build());
+      List<BookVO> bookList = bookService.getBookList();
 
       // 로직 구현
       return new ApiResponse<>(ResultCode.Success, bookList);
@@ -43,14 +55,81 @@ public class BookController {
     }
   }
 
-  @GetMapping(value = "/{bookId}")
-  public ApiResponse getBook(@PathVariable(value = "bookId") Long bookId) throws Exception {
+  @PostMapping(value = "/create")
+  public ApiResponseVO<Object> createBook(@RequestBody BookVO bookVO)
+      throws HttpStatusCodeException {
+    try {
+      if (bookService.getBookById(bookVO.getBookId()) != null) {
+        return ApiResponseVO.builder()
+            .code(StatusConst.BadRequest.getStatus())
+            .message("Data already exist.")
+            .build();
+      }
+      bookService.createBook(bookVO);
+
+      return ApiResponseVO.builder()
+          .code(StatusConst.Success.getStatus())
+          .message(StatusConst.Success.getMessage())
+          .result(bookVO)
+          .build();
+    } catch (Exception e) {
+      return ApiResponseVO.builder()
+          .code(StatusConst.InternalServerError.getStatus())
+          .message(e.getMessage())
+          .build();
+    }
+  }
+
+  @PutMapping(value = "/update/{bookId}")
+  public ApiResponseVO<Object> updateBook(
+      @PathVariable(value = "bookId") Integer bookId, @RequestBody BookVO bookVO)
+      throws HttpStatusCodeException {
     try {
       BookVO book = bookService.getBook(bookId);
       // 로직 구현
       return new ApiResponse<>(ResultCode.Success, book);
     } catch (ApiException e) {
       throw new ApiException(ErrorCode.InternalServerError);
+      if (bookService.getBookById(bookId) == null) {
+        return ApiResponseVO.builder()
+            .code(StatusConst.BadRequest.getStatus())
+            .message("Data not exist.")
+            .build();
+      }
+
+      bookService.updateBook(bookVO);
+
+      return ApiResponseVO.builder()
+          .code(StatusConst.Success.getStatus())
+          .message(StatusConst.Success.getMessage())
+          .result(bookVO)
+          .build();
+    } catch (Exception e) {
+      return ApiResponseVO.builder()
+          .code(StatusConst.InternalServerError.getStatus())
+          .message(e.getMessage())
+          .build();
+    }
+  }
+
+  @PutMapping(value = "/review/{bookId}")
+  public ApiResponseVO<Object> getReviewListByBookId(@PathVariable(value = "bookId") Integer bookId)
+      throws HttpStatusCodeException {
+    try {
+      if (bookService.getBookById(bookId) == null) {
+        return ApiResponseVO.builder()
+            .code(StatusConst.BadRequest.getStatus())
+            .message("Data not exist.")
+            .build();
+      }
+
+      List<ReviewVO> reviewList = bookService.getReviewListByBookId(bookId);
+
+      return ApiResponseVO.builder()
+          .code(StatusConst.Success.getStatus())
+          .message(StatusConst.Success.getMessage())
+          .result(reviewList)
+          .build();
     } catch (Exception e) {
       throw new Exception(e);
     }

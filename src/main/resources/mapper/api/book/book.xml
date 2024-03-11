@@ -2,12 +2,35 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="lgcns.eegoba.api.book.mapper.BookMapper">
 
-    <select id="getBookList" resultType="List">
-        SELECT * FROM TB_BOOK
+    <select id="getBookById" resultType="BookVO">
+        SELECT *
+          FROM TB_BOOK
+         WHERE BOOK_ID = #{bookId}
     </select>
 
-    <select id="getBookById" resultType="lgcns.eegoba.api.book.vo.BookVO">
-        SELECT * FROM TB_BOOK WHERE BOOK_ID = #{bookId}
+    <select id="getBookList" resultType="BookVO">
+        SELECT *
+          FROM TB_BOOK
+    </select>
+
+    <insert id="insertBook" parameterType="BookVO">
+        INSERT INTO TB_BOOK (TITLE, AUTHOR, PUBLISHER, ISBN, IMAGE_URL)
+             VALUES(#{title}, #{author}, #{publisher}, #{isbn}, #{image_url})
+    </insert>
+
+    <update id="updateBook" parameterType="BookVO">
+        UPDATE TB_BOOK
+           SET TITLE = #{title}
+             , AUTHOR = #{author}
+             , PUBLISHER = #{publisher}
+             , ISBN = #{isbn}
+             , IMAGE_URL = #{imageUrl}
+         WHERE BOOK_ID = #{bookId}
+    </update>
+
+    <select id="getBookReviewListByBookId" resultType="BookVO">
+        SELECT *
+          FROM TB_BOOK
     </select>
 
 </mapper>
