@@ -1,11 +1,11 @@
 package lgcns.eegoba.common.utils;
 
-import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.stereotype.Service;
+import org.mindrot.jbcrypt.BCrypt;
 
 @Service
 public class SaltUtil {
-
+  
   /**
    * 비밀번호를 Bcrypt 암호. *화한다
    *
@@ -17,23 +17,21 @@ public class SaltUtil {
     return BCrypt.hashpw(password, salt);
   }
 
-  /**
-   * Salt 값을 얻는다.
-   *
-   * @return
-   */
-  public String getSalt() {
-    return BCrypt.gensalt();
-  }
+    /**
+     * Salt 값을 얻는다.
+     * @return
+     */
+    public String getSalt(){
+        return BCrypt.gensalt();
+    }
 
-  /**
-   * 암호화된 비밀번호와 입력된 비밀번호를 비교
-   *
-   * @param password
-   * @param hashPassword
-   * @return
-   */
-  public boolean checkPassword(String password, String hashPassword) {
-    return BCrypt.checkpw(password, hashPassword);
-  }
+    /**
+     * 암호화된 비밀번호와 입력된 비밀번호를 비교
+     * @param password
+     * @param hashPassword
+     * @return
+     */
+    public boolean checkPassword(String password, String hashPassword){
+        return BCrypt.checkpw(password, hashPassword);
+    }
 }
