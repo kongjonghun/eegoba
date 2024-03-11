@@ -4,43 +4,42 @@
 
     <insert id="insertUser" parameterType="lgcns.eegoba.api.user.vo.UserVO">
         INSERT INTO TB_USER (
-            USR_NM,
-            USR_EMAIL,
-            USR_GNDR,
-            USR_NNM,
-            USR_PW,
-            USR_BRTH,
-            USR_RNK
-        )
-        VALUES (
-            #{usrNm},
-            #{usrEmail},
-            #{usrGndr},
-            #{usrNnm},
-            #{usrPw},
-            #{usrBrth},
-            #{usrRnk}
+            USER_NAME,
+            EMAIL,
+            GENDER,
+            NICKNAME,
+            PASSWORD,
+            BIRTHDATE,
+            POSITION
+        ) VALUES (
+            #{userName},
+            #{email},
+            #{gender},
+            #{nickname},
+            #{password},
+            #{birthdate},
+            #{position}
         )
     </insert>
 
     <select id="getUserByEmail" resultType="lgcns.eegoba.api.user.vo.UserVO">
         SELECT
-            USR_ID,
-            USR_NM,
-            USR_EMAIL,
-            USR_GNDR,
-            USR_NNM,
-            USR_PW,
-            USR_BRTH,
-            USR_RNK
+            USER_ID,
+            USER_NAME,
+            EMAIL,
+            GENDER,
+            NICKNAME,
+            PASSWORD,
+            BIRTHDATE,
+            POSITION
         FROM TB_USER
-        WHERE USR_EMAIL = #{usrEmail}
+        WHERE EMAIL = #{email}
     </select>
 
     <update id="updatePasswordByEmail" parameterType="lgcns.eegoba.api.user.vo.UserPasswordUpdateVO">
         UPDATE TB_USER
-        SET USR_PW = #{usrPw}
-        WHERE USR_EMAIL = #{usrEmail};
+        SET PASSWORD = #{password}
+        WHERE EMAIL = #{email}
     </update>
 
 </mapper>

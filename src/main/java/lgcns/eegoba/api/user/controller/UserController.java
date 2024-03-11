@@ -80,7 +80,7 @@ public class UserController {
   }
 
   @PostMapping(value = "/dup-nickname")
-  public ApiResponseVO dupNicknameCheck(@RequestParam String usrNnm)
+  public ApiResponseVO dupNicknameCheck(@RequestParam String userNickname)
       throws HttpStatusCodeException {
 
     try {

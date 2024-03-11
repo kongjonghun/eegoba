@@ -22,18 +22,18 @@ public class UserService {
 
   @Transactional
   public void join(UserVO userVO) {
-    userVO.setUsrPw(passwordEncoder.encode(userVO.getUsrPw()));
+    userVO.setPassword(passwordEncoder.encode(userVO.getPassword()));
     userMapper.insertUser(userVO);
   }
 
   public UserVO login(UserLoginRequestVO userLoginRequestVO) {
     UserVO userVO;
-    userVO = userMapper.getUserByEmail(userLoginRequestVO.getUsrEmail());
+    userVO = userMapper.getUserByEmail(userLoginRequestVO.getEmail());
     if (userVO == null) { // 사용자가 존재하지 않는 경우
       return userVO;
     }
 
-    if (passwordEncoder.matches(userLoginRequestVO.getUsrPw(), userVO.getUsrPw())) {
+    if (passwordEncoder.matches(userLoginRequestVO.getPassword(), userVO.getPassword())) {
       return userVO;
     } else { // password 오류
       throw new ApiException(ExceptionEnum.ACCESS_DENIED_EXCEPTION);
@@ -43,11 +43,12 @@ public class UserService {
   @Transactional
   public void updatePassword(UserPasswordUpdateVO userPasswordUpdateVO) {
     UserVO userVO;
-    userVO = userMapper.getUserByEmail(userPasswordUpdateVO.getUsrEmail());
-    if (passwordEncoder.matches(userPasswordUpdateVO.getUsrPw(), userVO.getUsrPw())) {
+    userVO = userMapper.getUserByEmail(userPasswordUpdateVO.getEmail());
+    if (passwordEncoder.matches(userPasswordUpdateVO.getPassword(), userVO.getPassword())) {
       throw new ApiException(ExceptionEnum.PASSWORD_VALIDATION_FAILED);
     }
-    userPasswordUpdateVO.setUsrPw(passwordEncoder.encode(userPasswordUpdateVO.getUsrPw()));
+    userPasswordUpdateVO.setPassword(
+        passwordEncoder.encode(userPasswordUpdateVO.getPassword()));
     userMapper.updatePasswordByEmail(userPasswordUpdateVO);
   }
 
