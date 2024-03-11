@@ -1,7 +1,5 @@
 package lgcns.eegoba.common.utils;
 
-import org.springframework.stereotype.Service;
-import org.mindrot.jbcrypt.BCrypt;
 import lombok.experimental.UtilityClass;
 import org.mindrot.jbcrypt.BCrypt;
 
@@ -19,21 +17,23 @@ public class SaltUtil {
     return BCrypt.hashpw(password, salt);
   }
 
-    /**
-     * Salt 값을 얻는다.
-     * @return
-     */
-    public String getSalt(){
-        return BCrypt.gensalt();
-    }
+  /**
+   * Salt 값을 얻는다.
+   *
+   * @return
+   */
+  public String getSalt() {
+    return BCrypt.gensalt();
+  }
 
-    /**
-     * 암호화된 비밀번호와 입력된 비밀번호를 비교
-     * @param password
-     * @param hashPassword
-     * @return
-     */
-    public boolean checkPassword(String password, String hashPassword){
-        return BCrypt.checkpw(password, hashPassword);
-    }
+  /**
+   * 암호화된 비밀번호와 입력된 비밀번호를 비교
+   *
+   * @param password
+   * @param hashPassword
+   * @return
+   */
+  public boolean checkPassword(String password, String hashPassword) {
+    return BCrypt.checkpw(password, hashPassword);
+  }
 }
