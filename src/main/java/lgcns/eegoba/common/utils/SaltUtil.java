@@ -5,16 +5,17 @@ import org.mindrot.jbcrypt.BCrypt;
 
 @Service
 public class SaltUtil {
-
-    /**
-     * 비밀번호를 Bcrypt 암호화한다.
-     * @param salt
-     * @param password
-     * @return
-     */
-    public String encodePassword(String salt, String password){
-        return BCrypt.hashpw(password, salt);
-    }
+  
+  /**
+   * 비밀번호를 Bcrypt 암호. *화한다
+   *
+   * @param salt
+   * @param password
+   * @return
+   */
+  public String encodePassword(String salt, String password) {
+    return BCrypt.hashpw(password, salt);
+  }
 
     /**
      * Salt 값을 얻는다.
