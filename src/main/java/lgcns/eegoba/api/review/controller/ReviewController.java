@@ -1,7 +1,5 @@
 package lgcns.eegoba.api.review.controller;
 
-import java.util.List;
-
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -9,6 +7,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import java.util.List;
 import lgcns.eegoba.api.review.service.ReviewService;
 import lgcns.eegoba.api.review.vo.ReviewVO;
 import lgcns.eegoba.common.constant.StatusConst;
@@ -30,8 +29,14 @@ public class ReviewController {
 
   @Operation(summary = "후기 목록 조회", description = "전체 후기 목록 조회")
   @ApiResponses({
-          @ApiResponse(responseCode = "200", description = "성공", content = @Content(schema = @Schema(implementation = ApiExceptionEntity.class))),
-          @ApiResponse(responseCode = "500", description = "조회에 실패하였습니다.", content = @Content(schema = @Schema(implementation = ApiExceptionEntity.class)))
+    @ApiResponse(
+        responseCode = "200",
+        description = "성공",
+        content = @Content(schema = @Schema(implementation = ApiExceptionEntity.class))),
+    @ApiResponse(
+        responseCode = "500",
+        description = "조회에 실패하였습니다.",
+        content = @Content(schema = @Schema(implementation = ApiExceptionEntity.class)))
   })
   @GetMapping("")
   public ApiResponseVO<Object> getReviewList() throws HttpStatusCodeException {
@@ -74,7 +79,9 @@ public class ReviewController {
   @GetMapping("/user")
   public ApiResponseVO<Object> getReviewListByUserId(
       @Parameter(description = "사용자ID", required = true)
-      @RequestParam(value = "userId", required = false) Long userId) throws Exception {
+          @RequestParam(value = "userId", required = false)
+          Long userId)
+      throws Exception {
     //    public ApiResponseVO<Object> getReviewByUserId(@SessionAttribute(name = USER_ID, required
     // = false) Long userId) { // TODO 세션으로 변경
     try {
