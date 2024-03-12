@@ -1,0 +1,203 @@
+{
+	"info": {
+		"_postman_id": "b1e19744-7a4a-47fc-a65d-3fd3ca31c4b6",
+		"name": "EeGoBa",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "25327663"
+	},
+	"item": [
+		{
+			"name": "Review",
+			"item": [
+				{
+					"name": "reviewList",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/eegoba/review",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"eegoba",
+								"review"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "save",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"contentType\": \"BOOK\"\r\n    , \"bookId\": 8\r\n    , \"userId\": 2\r\n    , \"reviewContent\": \"SAVE API TEST\"\r\n    , \"isRecommend\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/eegoba/review/save",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"eegoba",
+								"review",
+								"save"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"reviewId\": 7\r\n    , \"contentType\": \"BOOK\"\r\n    , \"bookId\": 1\r\n    , \"reviewContent\": \"UPDATE API TEST\"\r\n    , \"isRecommend\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/eegoba/review/update",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"eegoba",
+								"review",
+								"update"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "save - SUCCESS",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"reviewId\": 7\r\n    , \"contentType\": \"BOOK\"\r\n    , \"bookId\": 1\r\n    , \"reviewContent\": \"UPDATE API TEST\"\r\n    , \"isRecommend\": true\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/eegoba/review/update",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"eegoba",
+										"review",
+										"update"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 27 Feb 2024 05:47:42 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"code\": 200,\n    \"message\": \"Success\",\n    \"result\": 1\n}"
+						}
+					]
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"reviewId\": 7\r\n    , \"contentType\": \"BOOK\"\r\n    , \"bookId\": 1\r\n    , \"reviewContent\": \"UPDATE API TEST\"\r\n    , \"isRecommend\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/eegoba/review/update",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"eegoba",
+								"review",
+								"update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getReviewByReviewId",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/eegoba/review/3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"eegoba",
+								"review",
+								"3"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
