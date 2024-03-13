@@ -47,8 +47,7 @@ public class UserService {
     if (passwordEncoder.matches(userPasswordUpdateVO.getPassword(), userVO.getPassword())) {
       throw new ApiException(ExceptionEnum.PASSWORD_VALIDATION_FAILED);
     }
-    userPasswordUpdateVO.setPassword(
-        passwordEncoder.encode(userPasswordUpdateVO.getPassword()));
+    userPasswordUpdateVO.setPassword(passwordEncoder.encode(userPasswordUpdateVO.getPassword()));
     userMapper.updatePasswordByEmail(userPasswordUpdateVO);
   }
 
