@@ -4,8 +4,8 @@ import lgcns.eegoba.api.user.mapper.UserMapper;
 import lgcns.eegoba.api.user.vo.UserLoginRequestVO;
 import lgcns.eegoba.api.user.vo.UserPasswordUpdateVO;
 import lgcns.eegoba.api.user.vo.UserVO;
+import lgcns.eegoba.common.constant.ErrorCode;
 import lgcns.eegoba.common.exception.ApiException;
-import lgcns.eegoba.common.exception.ExceptionEnum;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -36,7 +36,7 @@ public class UserService {
     if (passwordEncoder.matches(userLoginRequestVO.getUsrPw(), userVO.getUsrPw())) {
       return userVO;
     } else { // password 오류
-      throw new ApiException(ExceptionEnum.ACCESS_DENIED_EXCEPTION);
+      throw new ApiException(ErrorCode.ACCESS_DENIED_EXCEPTION);
     }
   }
 
@@ -45,7 +45,7 @@ public class UserService {
     UserVO userVO;
     userVO = userMapper.getUserByEmail(userPasswordUpdateVO.getUsrEmail());
     if (passwordEncoder.matches(userPasswordUpdateVO.getUsrPw(), userVO.getUsrPw())) {
-      throw new ApiException(ExceptionEnum.PASSWORD_VALIDATION_FAILED);
+      throw new ApiException(ErrorCode.PASSWORD_VALIDATION_FAILED);
     }
     userPasswordUpdateVO.setUsrPw(passwordEncoder.encode(userPasswordUpdateVO.getUsrPw()));
     userMapper.updatePasswordByEmail(userPasswordUpdateVO);
