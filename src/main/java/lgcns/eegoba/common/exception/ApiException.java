@@ -1,13 +1,14 @@
 package lgcns.eegoba.common.exception;
 
+import lgcns.eegoba.common.constant.ErrorCode;
 import lombok.Getter;
 
 @Getter
 public class ApiException extends RuntimeException {
-  private ExceptionEnum error;
+  private final ErrorCode errorCode;
 
-  public ApiException(ExceptionEnum e) {
+  public ApiException(ErrorCode e) {
     super(e.getMessage());
-    this.error = e;
+    this.errorCode = e;
   }
 }

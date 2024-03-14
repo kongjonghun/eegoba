@@ -10,6 +10,6 @@ import lombok.*;
 @Getter
 @Setter
 public class UserLoginRequestVO {
-  private String usrEmail = "";
-  private String usrPw = "";
+  private String email = "";
+  private String password = "";
 }

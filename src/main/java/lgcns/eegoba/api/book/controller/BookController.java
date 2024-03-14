@@ -3,16 +3,16 @@ package lgcns.eegoba.api.book.controller;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.List;
-import lgcns.eegoba.api.base.vo.ApiResponseVO;
 import lgcns.eegoba.api.book.service.BookService;
 import lgcns.eegoba.api.book.vo.BookVO;
 import lgcns.eegoba.api.review.vo.ReviewVO;
-import lgcns.eegoba.common.constant.StatusConst;
-import lgcns.eegoba.common.response.ApiResponseVO;
+import lgcns.eegoba.common.constant.ErrorCode;
+import lgcns.eegoba.common.constant.ResultCode;
+import lgcns.eegoba.common.exception.ApiException;
+import lgcns.eegoba.common.response.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.HttpStatusCodeException;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -23,120 +23,80 @@ public class BookController {
   private final BookService bookService;
 
   @GetMapping(value = "/{bookId}")
-  public ApiResponseVO<Object> getBookById(@PathVariable(value = "bookId") Integer bookId)
-      throws HttpStatusCodeException {
+  public ApiResponse getBookById(@PathVariable(value = "bookId") Integer bookId) throws Exception {
     try {
       BookVO book = bookService.getBookById(bookId);
 
       // 로직 구현
-      return ApiResponseVO.builder()
-          .code(StatusConst.Success.getStatus())
-          .message(StatusConst.Success.getMessage())
-          .result(book)
-          .build();
+      return new ApiResponse<>(ResultCode.Success, book);
+    } catch (ApiException e) {
+      throw new ApiException(ErrorCode.InternalServerError);
     } catch (Exception e) {
-      return ApiResponseVO.builder()
-          .code(StatusConst.InternalServerError.getStatus())
-          .message(e.getMessage())
-          .build();
+      throw new Exception(e);
     }
   }
 
   @GetMapping(value = "")
-  public ApiResponseVO<Object> getBookList(HttpServletRequest request, HttpServletResponse response)
-      throws HttpStatusCodeException {
+  public ApiResponse getBookList(HttpServletRequest request, HttpServletResponse response)
+      throws Exception {
     try {
       List<BookVO> bookList = bookService.getBookList();
 
       // 로직 구현
-      return ApiResponseVO.builder()
-          .code(StatusConst.Success.getStatus())
-          .message(StatusConst.Success.getMessage())
-          .result(bookList)
-          .build();
+      return new ApiResponse<>(ResultCode.Success, bookList);
+    } catch (ApiException e) {
+      throw new ApiException(ErrorCode.InternalServerError);
     } catch (Exception e) {
-      return ApiResponseVO.builder()
-          .code(StatusConst.InternalServerError.getStatus())
-          .message(e.getMessage())
-          .build();
+      throw new Exception(e);
     }
   }
 
   @PostMapping(value = "/create")
-  public ApiResponseVO<Object> createBook(@RequestBody BookVO bookVO)
-      throws HttpStatusCodeException {
+  public ApiResponse createBook(@RequestBody BookVO bookVO) throws Exception {
     try {
       if (bookService.getBookById(bookVO.getBookId()) != null) {
-        return ApiResponseVO.builder()
-            .code(StatusConst.BadRequest.getStatus())
-            .message("Data already exist.")
-            .build();
+        // todo ApiException -> 다른 Exception 변경
+        throw new ApiException(ErrorCode.InternalServerError);
       }
       bookService.createBook(bookVO);
 
-      return ApiResponseVO.builder()
-          .code(StatusConst.Success.getStatus())
-          .message(StatusConst.Success.getMessage())
-          .result(bookVO)
-          .build();
+      return new ApiResponse<>(ResultCode.Success, bookVO);
     } catch (Exception e) {
-      return ApiResponseVO.builder()
-          .code(StatusConst.InternalServerError.getStatus())
-          .message(e.getMessage())
-          .build();
+      throw new Exception(e);
     }
   }
 
   @PutMapping(value = "/update/{bookId}")
-  public ApiResponseVO<Object> updateBook(
-      @PathVariable(value = "bookId") Integer bookId, @RequestBody BookVO bookVO)
-      throws HttpStatusCodeException {
+  public ApiResponse updateBook(
+      @PathVariable(value = "bookId") Integer bookId, @RequestBody BookVO bookVO) throws Exception {
     try {
       if (bookService.getBookById(bookId) == null) {
-        return ApiResponseVO.builder()
-            .code(StatusConst.BadRequest.getStatus())
-            .message("Data not exist.")
-            .build();
+        // todo ApiException -> 다른 Exception 변경
+        throw new ApiException(ErrorCode.InternalServerError);
       }
-
       bookService.updateBook(bookVO);
 
-      return ApiResponseVO.builder()
-          .code(StatusConst.Success.getStatus())
-          .message(StatusConst.Success.getMessage())
-          .result(bookVO)
-          .build();
+      // 로직 구현
+      return new ApiResponse<>(ResultCode.Success);
     } catch (Exception e) {
-      return ApiResponseVO.builder()
-          .code(StatusConst.InternalServerError.getStatus())
-          .message(e.getMessage())
-          .build();
+      throw new ApiException(ErrorCode.InternalServerError);
     }
   }
 
   @PutMapping(value = "/review/{bookId}")
-  public ApiResponseVO<Object> getReviewListByBookId(@PathVariable(value = "bookId") Integer bookId)
-      throws HttpStatusCodeException {
+  public ApiResponse getReviewListByBookId(@PathVariable(value = "bookId") Integer bookId)
+      throws Exception {
     try {
       if (bookService.getBookById(bookId) == null) {
-        return ApiResponseVO.builder()
-            .code(StatusConst.BadRequest.getStatus())
-            .message("Data not exist.")
-            .build();
+        // todo ApiException -> 다른 Exception 변경
+        throw new ApiException(ErrorCode.InternalServerError);
       }
 
       List<ReviewVO> reviewList = bookService.getReviewListByBookId(bookId);
 
-      return ApiResponseVO.builder()
-          .code(StatusConst.Success.getStatus())
-          .message(StatusConst.Success.getMessage())
-          .result(reviewList)
-          .build();
+      return new ApiResponse<>(ResultCode.Success, reviewList);
     } catch (Exception e) {
-      return ApiResponseVO.builder()
-          .code(StatusConst.InternalServerError.getStatus())
-          .message(e.getMessage())
-          .build();
+      throw new ApiException(ErrorCode.InternalServerError);
     }
   }
 }

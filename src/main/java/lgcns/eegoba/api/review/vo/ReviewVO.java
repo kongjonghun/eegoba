@@ -2,7 +2,7 @@ package lgcns.eegoba.api.review.vo;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.Date;
-import lgcns.eegoba.api.review.model.ContentType;
+import lgcns.eegoba.api.review.model.ReviewType;
 import lombok.*;
 
 @Data
@@ -14,8 +14,8 @@ public class ReviewVO {
   @Schema(description = "후기ID", required = true, type = "Long", example = "23")
   private Long reviewId;
 
-  @Schema(description = "후기 종류", required = true, type = "ContentType", example = "BOOK")
-  private ContentType type;
+  @Schema(description = "후기 종류", required = true, type = "ReviewType", example = "BOOK")
+  private ReviewType type;
 
   @Schema(description = "책ID", required = false, type = "Long", example = "123")
   private Long bookId;

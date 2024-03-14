@@ -3,13 +3,27 @@
 <mapper namespace="lgcns.eegoba.api.book.mapper.BookMapper">
 
     <select id="getBookById" resultType="BookVO">
-        SELECT *
+        SELECT BOOK_ID
+             , TITLE
+             , AUTHOR
+             , PUBLISHER
+             , ISBN
+             , IMAGE_URL
+             , CREATED_AT
+             , UPDATED_AT
           FROM TB_BOOK
          WHERE BOOK_ID = #{bookId}
     </select>
 
     <select id="getBookList" resultType="BookVO">
-        SELECT *
+        SELECT BOOK_ID
+             , TITLE
+             , AUTHOR
+             , PUBLISHER
+             , ISBN
+             , IMAGE_URL
+             , CREATED_AT
+             , UPDATED_AT
           FROM TB_BOOK
     </select>
 
@@ -29,7 +43,14 @@
     </update>
 
     <select id="getBookReviewListByBookId" resultType="BookVO">
-        SELECT *
+        SELECT BOOK_ID
+             , TITLE
+             , AUTHOR
+             , PUBLISHER
+             , ISBN
+             , IMAGE_URL
+             , CREATED_AT
+             , UPDATED_AT
           FROM TB_BOOK
     </select>
 

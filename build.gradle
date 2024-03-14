@@ -84,3 +84,5 @@ spotless {
 tasks.named('test') {
 	useJUnitPlatform()
 }
+
+compileJava.dependsOn 'spotlessApply'
