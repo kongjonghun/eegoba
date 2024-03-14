@@ -39,6 +39,8 @@ dependencies {
 	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.3'
 	// JBCrypt
 	implementation group: 'org.mindrot', name: 'jbcrypt', version: '0.3m'
+	// Swagger
+	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0'
 
 
 	//	// jpa
@@ -82,3 +84,5 @@ spotless {
 tasks.named('test') {
 	useJUnitPlatform()
 }
+
+compileJava.dependsOn 'spotlessApply'

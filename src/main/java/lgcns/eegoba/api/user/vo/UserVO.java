@@ -10,12 +10,12 @@ import lombok.*;
 @Getter
 @Setter
 public class UserVO {
-  private int usrId;
-  private String usrNm = "";
-  private String usrEmail = "";
-  private String usrGndr = "";
-  private String usrNnm = "";
-  private String usrBrth = "";
-  private String usrRnk = "";
-  private String usrPw = "";
+  private int userId;
+  private String userName = "";
+  private String email = "";
+  private String gender = "";
+  private String nickname = "";
+  private String birthdate = "";
+  private String position = "";
+  private String password = "";
 }

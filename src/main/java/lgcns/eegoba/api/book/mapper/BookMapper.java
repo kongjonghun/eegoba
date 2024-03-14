@@ -11,7 +11,7 @@ public interface BookMapper {
   BookVO getBookById(Long bookId);
 
   List<BookVO> getBookList();
-  
+
   void insertBook(BookVO bookVO);
 
   void updateBook(BookVO bookVO);
