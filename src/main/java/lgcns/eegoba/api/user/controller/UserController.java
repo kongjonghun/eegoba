@@ -11,7 +11,6 @@ import lgcns.eegoba.common.response.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.HttpStatusCodeException;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -22,26 +21,19 @@ public class UserController {
   private final UserService userService;
 
   @PostMapping(value = "/join")
-  public ApiResponse join(@RequestBody UserVO userVO) throws HttpStatusCodeException {
+  public ApiResponse join(@RequestBody UserVO userVO) throws Exception {
     userService.join(userVO);
     try {
-      return ApiResponse.builder()
-          .status(ResultCode.Success.getStatus())
-          .code(ResultCode.Success.getCode())
-          .message(ResultCode.Success.getMessage())
-          .build();
+      return new ApiResponse<>(ResultCode.Success);
+    } catch (ApiException e) {
+      throw new ApiException(ErrorCode.InternalServerError);
     } catch (Exception e) {
-      return ApiResponse.builder()
-          .status(ErrorCode.InternalServerError.getStatus())
-          .code(ErrorCode.InternalServerError.getCode())
-          .message(e.getMessage())
-          .build();
+      throw new Exception(e);
     }
   }
 
   @PostMapping(value = "/login")
-  public ApiResponse login(@RequestBody UserLoginRequestVO userLoginRequestVO)
-      throws HttpStatusCodeException {
+  public ApiResponse login(@RequestBody UserLoginRequestVO userLoginRequestVO) throws Exception {
     log.info("Login Requesnt => " + userLoginRequestVO.toString());
     UserVO userVO = userService.login(userLoginRequestVO);
 
@@ -51,55 +43,37 @@ public class UserController {
 
     // session 적용 시 userId session에 저장하는 로직 구현 필요
     try {
-      return ApiResponse.builder()
-          .status(ResultCode.Success.getStatus())
-          .code(ResultCode.Success.getCode())
-          .message(ResultCode.Success.getMessage())
-          .build();
+      return new ApiResponse<>(ResultCode.Success, userVO);
+    } catch (ApiException e) {
+      throw new ApiException(ErrorCode.InternalServerError);
     } catch (Exception e) {
-      return ApiResponse.builder()
-          .status(ErrorCode.InternalServerError.getStatus())
-          .code(ErrorCode.InternalServerError.getCode())
-          .message(e.getMessage())
-          .build();
+      throw new Exception(e);
     }
   }
 
   @PostMapping(value = "/init-password")
   public ApiResponse initPassword(@RequestBody UserPasswordUpdateVO userPasswordUpdateVO)
-      throws HttpStatusCodeException {
+      throws Exception {
     userService.updatePassword(userPasswordUpdateVO);
 
     try {
-      return ApiResponse.builder()
-          .status(ResultCode.Success.getStatus())
-          .code(ResultCode.Success.getCode())
-          .message(ResultCode.Success.getMessage())
-          .build();
+      return new ApiResponse<>(ResultCode.Success);
+    } catch (ApiException e) {
+      throw new ApiException(ErrorCode.InternalServerError);
     } catch (Exception e) {
-      return ApiResponse.builder()
-          .status(ErrorCode.InternalServerError.getStatus())
-          .message(e.getMessage())
-          .build();
+      throw new Exception(e);
     }
   }
 
   @PostMapping(value = "/check-nickname")
-  public ApiResponse checkNickname(@RequestParam String nickname) throws HttpStatusCodeException {
+  public ApiResponse checkNickname(@RequestParam String nickname) throws Exception {
 
     try {
-      // 로직 구현
-      return ApiResponse.builder()
-          .status(ResultCode.Success.getStatus())
-          .code(ResultCode.Success.getCode())
-          .message(ResultCode.Success.getMessage())
-          .build();
+      return new ApiResponse<>(ResultCode.Success);
+    } catch (ApiException e) {
+      throw new ApiException(ErrorCode.InternalServerError);
     } catch (Exception e) {
-      return ApiResponse.builder()
-          .status(ErrorCode.InternalServerError.getStatus())
-          .code(ErrorCode.InternalServerError.getCode())
-          .message(e.getMessage())
-          .build();
+      throw new Exception(e);
     }
   }
 }
