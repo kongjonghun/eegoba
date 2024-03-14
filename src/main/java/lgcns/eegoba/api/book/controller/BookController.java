@@ -12,6 +12,7 @@ import lgcns.eegoba.common.exception.ApiException;
 import lgcns.eegoba.common.response.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @Slf4j
@@ -23,12 +24,11 @@ public class BookController {
   private final BookService bookService;
 
   @GetMapping(value = "/{bookId}")
-  public ApiResponse getBookById(@PathVariable(value = "bookId") Integer bookId) throws Exception {
+  public ResponseEntity<ApiResponse> getBookById(@PathVariable(value = "bookId") Long bookId)
+      throws Exception {
     try {
       BookVO book = bookService.getBookById(bookId);
-
-      // 로직 구현
-      return new ApiResponse<>(ResultCode.Success, book);
+      return ResponseEntity.ok(ApiResponse.of(ResultCode.Success, book));
     } catch (ApiException e) {
       throw new ApiException(ErrorCode.InternalServerError);
     } catch (Exception e) {
@@ -37,13 +37,11 @@ public class BookController {
   }
 
   @GetMapping(value = "")
-  public ApiResponse getBookList(HttpServletRequest request, HttpServletResponse response)
-      throws Exception {
+  public ResponseEntity<ApiResponse> getBookList(
+      HttpServletRequest request, HttpServletResponse response) throws Exception {
     try {
       List<BookVO> bookList = bookService.getBookList();
-
-      // 로직 구현
-      return new ApiResponse<>(ResultCode.Success, bookList);
+      return ResponseEntity.ok(ApiResponse.of(ResultCode.Success, bookList));
     } catch (ApiException e) {
       throw new ApiException(ErrorCode.InternalServerError);
     } catch (Exception e) {
@@ -52,49 +50,41 @@ public class BookController {
   }
 
   @PostMapping(value = "/create")
-  public ApiResponse createBook(@RequestBody BookVO bookVO) throws Exception {
+  public ResponseEntity<ApiResponse> createBook(@RequestBody BookVO bookVO) throws Exception {
     try {
       if (bookService.getBookById(bookVO.getBookId()) != null) {
-        // todo ApiException -> 다른 Exception 변경
         throw new ApiException(ErrorCode.InternalServerError);
       }
       bookService.createBook(bookVO);
-
-      return new ApiResponse<>(ResultCode.Success, bookVO);
+      return ResponseEntity.ok(ApiResponse.of(ResultCode.Success, bookVO));
     } catch (Exception e) {
       throw new Exception(e);
     }
   }
 
   @PutMapping(value = "/update/{bookId}")
-  public ApiResponse updateBook(
-      @PathVariable(value = "bookId") Integer bookId, @RequestBody BookVO bookVO) throws Exception {
+  public ResponseEntity<ApiResponse> updateBook(
+      @PathVariable(value = "bookId") Long bookId, @RequestBody BookVO bookVO) throws Exception {
     try {
       if (bookService.getBookById(bookId) == null) {
-        // todo ApiException -> 다른 Exception 변경
         throw new ApiException(ErrorCode.InternalServerError);
       }
       bookService.updateBook(bookVO);
-
-      // 로직 구현
-      return new ApiResponse<>(ResultCode.Success);
+      return ResponseEntity.ok(ApiResponse.of(ResultCode.Success, bookVO));
     } catch (Exception e) {
       throw new ApiException(ErrorCode.InternalServerError);
     }
   }
 
   @PutMapping(value = "/review/{bookId}")
-  public ApiResponse getReviewListByBookId(@PathVariable(value = "bookId") Integer bookId)
-      throws Exception {
+  public ResponseEntity<ApiResponse> getReviewListByBookId(
+      @PathVariable(value = "bookId") Long bookId) throws Exception {
     try {
       if (bookService.getBookById(bookId) == null) {
-        // todo ApiException -> 다른 Exception 변경
         throw new ApiException(ErrorCode.InternalServerError);
       }
-
       List<ReviewVO> reviewList = bookService.getReviewListByBookId(bookId);
-
-      return new ApiResponse<>(ResultCode.Success, reviewList);
+      return ResponseEntity.ok(ApiResponse.of(ResultCode.Success, reviewList));
     } catch (Exception e) {
       throw new ApiException(ErrorCode.InternalServerError);
     }

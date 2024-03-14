@@ -41,12 +41,19 @@ public class ApiResponse<T> {
     this.result = result;
   }
 
+  public static <T> ApiResponse<T> of(ResultCode resultCode) {
+    return new ApiResponse<T>(resultCode);
+  }
+
+  public static <T> ApiResponse<T> of(ResultCode resultCode, T result) {
+    return new ApiResponse<T>(resultCode, result);
+  }
+
   /* ErrorCode */
   public ApiResponse(ErrorCode errorCode) {
     this.status = errorCode.getStatus();
     this.code = errorCode.getCode();
     this.message = errorCode.getMessage();
-    this.result = result;
   }
 
   public ApiResponse(ErrorCode errorCode, T result) {
@@ -61,5 +68,13 @@ public class ApiResponse<T> {
     this.code = errorCode.getCode();
     this.message = message;
     this.result = result;
+  }
+
+  public static <T> ApiResponse<T> of(ErrorCode errorCode) {
+    return new ApiResponse<T>(errorCode);
+  }
+
+  public static <T> ApiResponse<T> of(ErrorCode errorCode, T result) {
+    return new ApiResponse<T>(errorCode, result);
   }
 }
