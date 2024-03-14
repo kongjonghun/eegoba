@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 public class BookService {
   private final BookMapper bookMapper;
 
-  public BookVO getBookById(Integer bookId) {
+  public BookVO getBookById(Long bookId) {
     return bookMapper.getBookById(bookId);
   }
 
@@ -28,7 +28,7 @@ public class BookService {
     bookMapper.updateBook(bookVO);
   }
 
-  public List<ReviewVO> getReviewListByBookId(Integer bookId) {
+  public List<ReviewVO> getReviewListByBookId(Long bookId) {
     return bookMapper.getBookReviewListByBookId(bookId);
   }
 }

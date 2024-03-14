@@ -4,71 +4,71 @@
 
     <select id="getReviewCount" resultType="int">
         SELECT COUNT(*)
-        FROM TB_REVIEW
-        WHERE USE_YN = 'Y'
+          FROM TB_REVIEW
+         WHERE USE_YN = 'Y'
     </select>
 
     <select id="getReviewList" resultType="ReviewVO">
         SELECT REVIEW_ID
-             , CONTENT_TYPE
+             , TYPE
              , BOOK_ID
              , LECTURE_ID
              , USER_ID
-             , REVIEW_CONTENT
+             , CONTENT
              , IS_RECOMMEND
              , CREATED_AT
              , UPDATED_AT
-        FROM TB_REVIEW
+          FROM TB_REVIEW
         WHERE USE_YN = 'Y'
     </select>
 
     <select id="getReviewById" resultType="ReviewVO">
         SELECT REVIEW_ID
-             , CONTENT_TYPE
+             , TYPE
              , BOOK_ID
              , LECTURE_ID
              , USER_ID
-             , REVIEW_CONTENT
+             , CONTENT
              , IS_RECOMMEND
              , CREATED_AT
              , UPDATED_AT
-        FROM TB_REVIEW
-        WHERE REVIEW_ID = #{reviewId}
-            AND USE_YN = 'Y'
+          FROM TB_REVIEW
+         WHERE REVIEW_ID = #{reviewId}
+           AND USE_YN = 'Y'
     </select>
 
     <select id="getReviewListByUserId" resultType="ReviewVO">
         SELECT REVIEW_ID
-             , CONTENT_TYPE
+             , TYPE
              , BOOK_ID
              , LECTURE_ID
              , USER_ID
-             , REVIEW_CONTENT
+             , CONTENT
              , IS_RECOMMEND
              , CREATED_AT
              , UPDATED_AT
-        FROM TB_REVIEW
-        WHERE USER_ID = #{userId}
-          AND USE_YN = 'Y'
+          FROM TB_REVIEW
+         WHERE USER_ID = #{userId}
+           AND USE_YN = 'Y'
     </select>
 
     <insert id="insertReview" parameterType="ReviewVO">
         INSERT INTO TB_REVIEW (
-           CONTENT_TYPE
+           TYPE
             , BOOK_ID
             , LECTURE_ID
             , USER_ID
-            , REVIEW_CONTENT
+            , CONTENT
             , IS_RECOMMEND
             , CREATED_AT
             , UPDATED_AT
             , USE_YN)
         VALUES (
-            #{contentType}
+            #{type}
             , #{bookId}
             , #{lectureId}
             , #{userId}
-            , #{reviewContent}
+            , #{content}
             , #{isRecommend}
             , #{createdAt}
             , #{updatedAt}
@@ -77,19 +77,19 @@
 
     <update id="updateReview" parameterType="ReviewVO">
         UPDATE TB_REVIEW
-        SET CONTENT_TYPE = #{contentType}
-          , BOOK_ID = #{bookId}
-          , LECTURE_ID = #{lectureId}
-          , REVIEW_CONTENT = #{reviewContent}
-          , IS_RECOMMEND = #{isRecommend}
-          , UPDATED_AT = #{updatedAt}
-        WHERE REVIEW_ID = #{reviewId}
+           SET TYPE = #{type}
+             , BOOK_ID = #{bookId}
+             , LECTURE_ID = #{lectureId}
+             , CONTENT = #{content}
+             , IS_RECOMMEND = #{isRecommend}
+             , UPDATED_AT = #{updatedAt}
+         WHERE REVIEW_ID = #{reviewId}
     </update>
 
     <update id="deleteReview">
         UPDATE TB_REVIEW
-        SET UPDATED_AT = #{updatedAt}
-          , USE_YN = 'N'
-        WHERE REVIEW_ID = #{reviewId}
+           SET UPDATED_AT = #{updatedAt}
+             , USE_YN = 'N'
+         WHERE REVIEW_ID = #{reviewId}
     </update>
 </mapper>

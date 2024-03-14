@@ -1,6 +1,6 @@
 package lgcns.eegoba.api.review.model;
 
-public enum ContentType {
+public enum ReviewType {
   BOOK,
   LECTURE
 }
