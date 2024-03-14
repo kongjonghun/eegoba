@@ -65,8 +65,8 @@ public class UserController {
     }
   }
 
-  @PostMapping(value = "/password-init")
-  public ApiResponse passwordInit(@RequestBody UserPasswordUpdateVO userPasswordUpdateVO)
+  @PostMapping(value = "/init-password")
+  public ApiResponse initPassword(@RequestBody UserPasswordUpdateVO userPasswordUpdateVO)
       throws HttpStatusCodeException {
     userService.updatePassword(userPasswordUpdateVO);
 
@@ -84,8 +84,8 @@ public class UserController {
     }
   }
 
-  @PostMapping(value = "/dup-nickname")
-  public ApiResponse dupNicknameCheck(@RequestParam String usrNnm) throws HttpStatusCodeException {
+  @PostMapping(value = "/check-nickname")
+  public ApiResponse checkNickname(@RequestParam String nickname) throws HttpStatusCodeException {
 
     try {
       // 로직 구현
