@@ -11,11 +11,10 @@ import lombok.*;
 @AllArgsConstructor
 public class BookVO {
 
-  private Long bookId;
+  private Integer bookId;
   private String title;
   private String author;
   private String publisher;
-  private String isbn;
   private String imageUrl;
   private List<ReviewVO> reviewVOList;
 }
