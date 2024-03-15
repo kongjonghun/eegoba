@@ -7,7 +7,7 @@ import lgcns.eegoba.api.user.vo.UserVO;
 import lgcns.eegoba.common.constant.ErrorCode;
 import lgcns.eegoba.common.constant.ResultCode;
 import lgcns.eegoba.common.exception.ApiException;
-import lgcns.eegoba.common.response.ApiResponse;
+import lgcns.eegoba.common.response.CommonApiResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
@@ -22,16 +22,16 @@ public class UserController {
   private final UserService userService;
 
   @PostMapping(value = "/join")
-  public ApiResponse join(@RequestBody UserVO userVO) throws HttpStatusCodeException {
+  public CommonApiResponse join(@RequestBody UserVO userVO) throws HttpStatusCodeException {
     userService.join(userVO);
     try {
-      return ApiResponse.builder()
+      return CommonApiResponse.builder()
           .status(ResultCode.Success.getStatus())
           .code(ResultCode.Success.getCode())
           .message(ResultCode.Success.getMessage())
           .build();
     } catch (Exception e) {
-      return ApiResponse.builder()
+      return CommonApiResponse.builder()
           .status(ErrorCode.InternalServerError.getStatus())
           .code(ErrorCode.InternalServerError.getCode())
           .message(e.getMessage())
@@ -40,24 +40,24 @@ public class UserController {
   }
 
   @PostMapping(value = "/login")
-  public ApiResponse login(@RequestBody UserLoginRequestVO userLoginRequestVO)
+  public CommonApiResponse login(@RequestBody UserLoginRequestVO userLoginRequestVO)
       throws HttpStatusCodeException {
     log.info("Login Requesnt => " + userLoginRequestVO.toString());
     UserVO userVO = userService.login(userLoginRequestVO);
 
     if (userVO == null) {
-      throw new ApiException(ErrorCode.NOT_EXISTING_USER_EXCEPTION);
+      throw new ApiException(ErrorCode.NotExistingUserException);
     }
 
     // session 적용 시 userId session에 저장하는 로직 구현 필요
     try {
-      return ApiResponse.builder()
+      return CommonApiResponse.builder()
           .status(ResultCode.Success.getStatus())
           .code(ResultCode.Success.getCode())
           .message(ResultCode.Success.getMessage())
           .build();
     } catch (Exception e) {
-      return ApiResponse.builder()
+      return CommonApiResponse.builder()
           .status(ErrorCode.InternalServerError.getStatus())
           .code(ErrorCode.InternalServerError.getCode())
           .message(e.getMessage())
@@ -66,18 +66,18 @@ public class UserController {
   }
 
   @PostMapping(value = "/init-password")
-  public ApiResponse initPassword(@RequestBody UserPasswordUpdateVO userPasswordUpdateVO)
+  public CommonApiResponse initPassword(@RequestBody UserPasswordUpdateVO userPasswordUpdateVO)
       throws HttpStatusCodeException {
     userService.updatePassword(userPasswordUpdateVO);
 
     try {
-      return ApiResponse.builder()
+      return CommonApiResponse.builder()
           .status(ResultCode.Success.getStatus())
           .code(ResultCode.Success.getCode())
           .message(ResultCode.Success.getMessage())
           .build();
     } catch (Exception e) {
-      return ApiResponse.builder()
+      return CommonApiResponse.builder()
           .status(ErrorCode.InternalServerError.getStatus())
           .message(e.getMessage())
           .build();
@@ -85,17 +85,18 @@ public class UserController {
   }
 
   @PostMapping(value = "/check-nickname")
-  public ApiResponse checkNickname(@RequestParam String nickname) throws HttpStatusCodeException {
+  public CommonApiResponse checkNickname(@RequestParam String nickname)
+      throws HttpStatusCodeException {
 
     try {
       // 로직 구현
-      return ApiResponse.builder()
+      return CommonApiResponse.builder()
           .status(ResultCode.Success.getStatus())
           .code(ResultCode.Success.getCode())
           .message(ResultCode.Success.getMessage())
           .build();
     } catch (Exception e) {
-      return ApiResponse.builder()
+      return CommonApiResponse.builder()
           .status(ErrorCode.InternalServerError.getStatus())
           .code(ErrorCode.InternalServerError.getCode())
           .message(e.getMessage())

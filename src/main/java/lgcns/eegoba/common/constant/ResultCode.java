@@ -9,13 +9,15 @@ import org.springframework.http.HttpStatus;
 public enum ResultCode {
   /* HTTP Common Success */
   Success(HttpStatus.OK.value(), "200", "Success"),
+  Created(HttpStatus.CREATED.value(), "201", "Created"),
+  NoContent(HttpStatus.NO_CONTENT.value(), "204", "NoContent"),
 
   /* User Success */
-  REGISTER_SUCCESS(200, "M001", "회원가입 되었습니다."),
-  LOGIN_SUCCESS(200, "M002", "로그인 되었습니다."),
-  REISSUE_SUCCESS(200, "M003", "재발급 되었습니다."),
-  LOGOUT_SUCCESS(200, "M004", "로그아웃 되었습니다."),
-  GET_MY_INFO_SUCCESS(200, "M005", "내 정보 조회 완료");
+  REGISTER_SUCCESS(HttpStatus.OK.value(), "M001", "회원가입 되었습니다."),
+  LOGIN_SUCCESS(HttpStatus.OK.value(), "M002", "로그인 되었습니다."),
+  REISSUE_SUCCESS(HttpStatus.OK.value(), "M003", "재발급 되었습니다."),
+  LOGOUT_SUCCESS(HttpStatus.OK.value(), "M004", "로그아웃 되었습니다."),
+  GET_MY_INFO_SUCCESS(HttpStatus.OK.value(), "M005", "내 정보 조회 완료");
 
   private final int status;
   private final String code;
