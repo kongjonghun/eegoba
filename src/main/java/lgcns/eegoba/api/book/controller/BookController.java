@@ -10,6 +10,7 @@ import lgcns.eegoba.common.constant.ErrorCode;
 import lgcns.eegoba.common.constant.ResultCode;
 import lgcns.eegoba.common.exception.ApiException;
 import lgcns.eegoba.common.response.ApiResponse;
+import lgcns.eegoba.common.utils.ValidationUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
@@ -23,10 +24,12 @@ public class BookController {
   private final BookService bookService;
 
   @GetMapping(value = "/{bookId}")
-  public ApiResponse getBookById(@PathVariable(value = "bookId") Integer bookId) throws Exception {
+  public ApiResponse getBookById(@PathVariable(value = "bookId") Long bookId) throws Exception {
     try {
       BookVO book = bookService.getBookById(bookId);
-
+      if (ValidationUtil.isEmpty(book)) {
+        throw new ApiException(ErrorCode.InternalServerError);
+      }
       // 로직 구현
       return new ApiResponse<>(ResultCode.Success, book);
     } catch (ApiException e) {
@@ -54,7 +57,7 @@ public class BookController {
   @PostMapping(value = "/create")
   public ApiResponse createBook(@RequestBody BookVO bookVO) throws Exception {
     try {
-      if (bookService.getBookById(bookVO.getBookId()) != null) {
+      if (ValidationUtil.isNotEmpty(bookService.getBookById(bookVO.getBookId()))) {
         // todo ApiException -> 다른 Exception 변경
         throw new ApiException(ErrorCode.InternalServerError);
       }
@@ -68,9 +71,9 @@ public class BookController {
 
   @PutMapping(value = "/update/{bookId}")
   public ApiResponse updateBook(
-      @PathVariable(value = "bookId") Integer bookId, @RequestBody BookVO bookVO) throws Exception {
+      @PathVariable(value = "bookId") Long bookId, @RequestBody BookVO bookVO) throws Exception {
     try {
-      if (bookService.getBookById(bookId) == null) {
+      if (ValidationUtil.isEmpty(bookService.getBookById(bookId))) {
         // todo ApiException -> 다른 Exception 변경
         throw new ApiException(ErrorCode.InternalServerError);
       }
@@ -84,10 +87,10 @@ public class BookController {
   }
 
   @PutMapping(value = "/review/{bookId}")
-  public ApiResponse getReviewListByBookId(@PathVariable(value = "bookId") Integer bookId)
+  public ApiResponse getReviewListByBookId(@PathVariable(value = "bookId") Long bookId)
       throws Exception {
     try {
-      if (bookService.getBookById(bookId) == null) {
+      if (ValidationUtil.isEmpty(bookService.getBookById(bookId))) {
         // todo ApiException -> 다른 Exception 변경
         throw new ApiException(ErrorCode.InternalServerError);
       }
