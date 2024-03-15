@@ -7,7 +7,7 @@ import java.net.UnknownHostException;
 import java.util.Arrays;
 import lgcns.eegoba.common.constant.ErrorCode;
 import lgcns.eegoba.common.constant.ResultCode;
-import lgcns.eegoba.common.response.ApiResponse;
+import lgcns.eegoba.common.response.CommonApiResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
@@ -26,7 +26,7 @@ public class HealthCheckController {
   private String activeProfile;
 
   @GetMapping(value = "/health")
-  public ApiResponse healthCheck(HttpServletRequest request, HttpServletResponse response)
+  public CommonApiResponse healthCheck(HttpServletRequest request, HttpServletResponse response)
       throws Exception {
     try {
       StringBuilder message = new StringBuilder();
@@ -40,10 +40,10 @@ public class HealthCheckController {
       healthCheckService.healthCheck();
 
       // DB Connection 성공일 경우 result = 1
-      return new ApiResponse(ResultCode.Success, message.toString(), 1);
+      return new CommonApiResponse(ResultCode.Success, message.toString(), 1);
     } catch (Exception e) {
       // DB Connection 실패일 경우 result = 0
-      return new ApiResponse(ErrorCode.InternalServerError, "DB Connection Fail", 0);
+      return new CommonApiResponse(ErrorCode.InternalServerError, "DB Connection Fail", 0);
     }
   }
 
