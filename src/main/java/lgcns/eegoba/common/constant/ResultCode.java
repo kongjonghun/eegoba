@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 public enum ResultCode {
   /* HTTP Common Success */
   Success(HttpStatus.OK.value(), "200", "Success"),
+  Created(HttpStatus.CREATED.value(), "201", "Created"),
+  NoContent(HttpStatus.NO_CONTENT.value(), "204", "NoContent"),
 
   /* User Success */
   REGISTER_SUCCESS(200, "M001", "회원가입 되었습니다."),

@@ -28,7 +28,7 @@ public class BookController {
     try {
       BookVO book = bookService.getBookById(bookId);
       if (ValidationUtil.isEmpty(book)) {
-        throw new ApiException(ErrorCode.InternalServerError);
+        throw new ApiException(ErrorCode.NotFound);
       }
       // 로직 구현
       return new ApiResponse<>(ResultCode.Success, book);
@@ -59,11 +59,11 @@ public class BookController {
     try {
       if (ValidationUtil.isNotEmpty(bookService.getBookById(bookVO.getBookId()))) {
         // todo ApiException -> 다른 Exception 변경
-        throw new ApiException(ErrorCode.InternalServerError);
+        throw new ApiException(ErrorCode.BadRequest);
       }
       bookService.createBook(bookVO);
 
-      return new ApiResponse<>(ResultCode.Success, bookVO);
+      return new ApiResponse<>(ResultCode.Created, bookVO);
     } catch (Exception e) {
       throw new Exception(e);
     }
@@ -75,7 +75,7 @@ public class BookController {
     try {
       if (ValidationUtil.isEmpty(bookService.getBookById(bookId))) {
         // todo ApiException -> 다른 Exception 변경
-        throw new ApiException(ErrorCode.InternalServerError);
+        throw new ApiException(ErrorCode.NotFound);
       }
       bookService.updateBook(bookVO);
 
@@ -92,7 +92,7 @@ public class BookController {
     try {
       if (ValidationUtil.isEmpty(bookService.getBookById(bookId))) {
         // todo ApiException -> 다른 Exception 변경
-        throw new ApiException(ErrorCode.InternalServerError);
+        throw new ApiException(ErrorCode.NotFound);
       }
 
       List<ReviewVO> reviewList = bookService.getReviewListByBookId(bookId);
