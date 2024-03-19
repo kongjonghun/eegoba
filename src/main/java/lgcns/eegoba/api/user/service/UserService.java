@@ -36,7 +36,7 @@ public class UserService {
     if (passwordEncoder.matches(userLoginRequestVO.getPassword(), userVO.getPassword())) {
       return userVO;
     } else { // password 오류
-      throw new ApiException(ErrorCode.ACCESS_DENIED_EXCEPTION);
+      throw new ApiException(ErrorCode.AccessDeniedException);
     }
   }
 
@@ -45,7 +45,7 @@ public class UserService {
     UserVO userVO;
     userVO = userMapper.getUserByEmail(userPasswordUpdateVO.getEmail());
     if (passwordEncoder.matches(userPasswordUpdateVO.getPassword(), userVO.getPassword())) {
-      throw new ApiException(ErrorCode.PASSWORD_VALIDATION_FAILED);
+      throw new ApiException(ErrorCode.PasswordValidationFailed);
     }
     userPasswordUpdateVO.setPassword(passwordEncoder.encode(userPasswordUpdateVO.getPassword()));
     userMapper.updatePasswordByEmail(userPasswordUpdateVO);

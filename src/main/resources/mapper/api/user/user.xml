@@ -4,42 +4,41 @@
 
     <insert id="insertUser" parameterType="UserVO">
         INSERT INTO TB_USER (
-            USER_NAME,
-            EMAIL,
-            GENDER,
-            NICKNAME,
-            PASSWORD,
-            BIRTHDATE,
-            POSITION
+               USER_NAME
+             , EMAIL
+             , GENDER
+             , NICKNAME
+             , PASSWORD
+             , BIRTHDATE
+             , POSITION
         ) VALUES (
-            #{userName},
-            #{email},
-            #{gender},
-            #{nickname},
-            #{password},
-            #{birthdate},
-            #{position}
+               #{userName}
+             , #{email}
+             , #{gender}
+             , #{nickname}
+             , #{password}
+             , #{birthdate}
+             , #{position}
         )
     </insert>
 
     <select id="getUserByEmail" resultType="UserVO">
-        SELECT
-            USER_ID,
-            USER_NAME,
-            EMAIL,
-            GENDER,
-            NICKNAME,
-            PASSWORD,
-            BIRTHDATE,
-            POSITION
-        FROM TB_USER
-        WHERE EMAIL = #{email}
+        SELECT USER_ID
+             , USER_NAME
+             , EMAIL
+             , GENDER
+             , NICKNAME
+             , PASSWORD
+             , BIRTHDATE
+             , POSITION
+          FROM TB_USER
+         WHERE EMAIL = #{email}
     </select>
 
     <update id="updatePasswordByEmail" parameterType="UserPasswordUpdateVO">
         UPDATE TB_USER
-        SET PASSWORD = #{password}
-        WHERE EMAIL = #{email}
+           SET PASSWORD = #{password}
+         WHERE EMAIL = #{email}
     </update>
 
 </mapper>
