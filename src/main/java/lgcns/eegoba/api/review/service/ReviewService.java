@@ -35,7 +35,7 @@ public class ReviewService {
     return reviewMapper.getReviewById(reviewId);
   }
 
-  public int saveReview(ReviewVO reviewVO) {
+  public int createReview(ReviewVO reviewVO) {
     try {
       requireNonNull(reviewVO);
 
