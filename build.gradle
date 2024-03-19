@@ -69,7 +69,8 @@ spotless {
 	java {
 		removeUnusedImports()
 		trimTrailingWhitespace()
-		indentWithTabs(4)
+		indentWithTabs()
+		indentWithSpaces(4)
 		endWithNewline()
 		googleJavaFormat()
 	}

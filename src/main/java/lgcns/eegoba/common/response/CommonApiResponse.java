@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class ApiResponse<T> {
+public class CommonApiResponse<T> {
   private Integer status;
   private String code;
   private String message;
@@ -21,45 +21,60 @@ public class ApiResponse<T> {
   private T result;
 
   /* ResultCode */
-  public ApiResponse(ResultCode resultCode) {
+  public CommonApiResponse(ResultCode resultCode) {
     this.status = resultCode.getStatus();
     this.code = resultCode.getCode();
     this.message = resultCode.getMessage();
   }
 
-  public ApiResponse(ResultCode resultCode, T result) {
+  public CommonApiResponse(ResultCode resultCode, T result) {
     this.status = resultCode.getStatus();
     this.code = resultCode.getCode();
     this.message = resultCode.getMessage();
     this.result = result;
   }
 
-  public ApiResponse(ResultCode resultCode, String message, T result) {
+  public CommonApiResponse(ResultCode resultCode, String message, T result) {
     this.status = resultCode.getStatus();
     this.code = resultCode.getCode();
     this.message = message;
     this.result = result;
+  }
+
+  public static <T> CommonApiResponse<T> of(ResultCode resultCode) {
+    return new CommonApiResponse<T>(resultCode);
+  }
+
+  public static <T> CommonApiResponse<T> of(ResultCode resultCode, T result) {
+    return new CommonApiResponse<T>(resultCode, result);
   }
 
   /* ErrorCode */
-  public ApiResponse(ErrorCode errorCode) {
+  public CommonApiResponse(ErrorCode errorCode) {
+    this.status = errorCode.getStatus();
+    this.code = errorCode.getCode();
+    this.message = errorCode.getMessage();
+  }
+
+  public CommonApiResponse(ErrorCode errorCode, T result) {
     this.status = errorCode.getStatus();
     this.code = errorCode.getCode();
     this.message = errorCode.getMessage();
     this.result = result;
   }
 
-  public ApiResponse(ErrorCode errorCode, T result) {
-    this.status = errorCode.getStatus();
-    this.code = errorCode.getCode();
-    this.message = errorCode.getMessage();
-    this.result = result;
-  }
-
-  public ApiResponse(ErrorCode errorCode, String message, T result) {
+  public CommonApiResponse(ErrorCode errorCode, String message, T result) {
     this.status = errorCode.getStatus();
     this.code = errorCode.getCode();
     this.message = message;
     this.result = result;
+  }
+
+  public static <T> CommonApiResponse<T> of(ErrorCode errorCode) {
+    return new CommonApiResponse<T>(errorCode);
+  }
+
+  public static <T> CommonApiResponse<T> of(ErrorCode errorCode, T result) {
+    return new CommonApiResponse<T>(errorCode, result);
   }
 }

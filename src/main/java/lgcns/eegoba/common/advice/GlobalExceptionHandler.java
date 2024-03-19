@@ -4,7 +4,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lgcns.eegoba.common.constant.ErrorCode;
 import lgcns.eegoba.common.exception.ApiException;
-import lgcns.eegoba.common.response.ApiResponse;
+import lgcns.eegoba.common.response.CommonApiResponse;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -12,15 +13,17 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class GlobalExceptionHandler {
 
   @ExceptionHandler({ApiException.class})
-  public ApiResponse apiExceptionHandler(
+  public ResponseEntity<CommonApiResponse> apiExceptionHandler(
       HttpServletRequest request, HttpServletResponse response, final ApiException e) {
-    return new ApiResponse<>(e.getErrorCode(), e.getMessage());
+    return ResponseEntity.status(e.getErrorCode().getStatus())
+        .body(CommonApiResponse.of(e.getErrorCode(), e.getMessage()));
   }
 
   @ExceptionHandler({Exception.class})
-  public ApiResponse exceptionHandler(
+  public ResponseEntity<CommonApiResponse> exceptionHandler(
       HttpServletRequest request, HttpServletResponse response, final Exception e) {
-    return new ApiResponse<>(ErrorCode.InternalServerError, e.getMessage());
+    return ResponseEntity.status(ErrorCode.InternalServerError.getStatus())
+        .body(CommonApiResponse.of(ErrorCode.InternalServerError, e.getMessage()));
   }
 
   //

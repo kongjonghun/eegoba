@@ -7,10 +7,11 @@ import lgcns.eegoba.api.user.vo.UserVO;
 import lgcns.eegoba.common.constant.ErrorCode;
 import lgcns.eegoba.common.constant.ResultCode;
 import lgcns.eegoba.common.exception.ApiException;
-import lgcns.eegoba.common.response.ApiResponse;
+import lgcns.eegoba.common.response.CommonApiResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.HttpStatusCodeException;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -21,59 +22,85 @@ public class UserController {
   private final UserService userService;
 
   @PostMapping(value = "/join")
-  public ApiResponse join(@RequestBody UserVO userVO) throws Exception {
+  public CommonApiResponse join(@RequestBody UserVO userVO) throws HttpStatusCodeException {
     userService.join(userVO);
     try {
-      return new ApiResponse<>(ResultCode.Success);
-    } catch (ApiException e) {
-      throw new ApiException(ErrorCode.InternalServerError);
+      return CommonApiResponse.builder()
+          .status(ResultCode.Success.getStatus())
+          .code(ResultCode.Success.getCode())
+          .message(ResultCode.Success.getMessage())
+          .build();
     } catch (Exception e) {
-      throw new Exception(e);
+      return CommonApiResponse.builder()
+          .status(ErrorCode.InternalServerError.getStatus())
+          .code(ErrorCode.InternalServerError.getCode())
+          .message(e.getMessage())
+          .build();
     }
   }
 
   @PostMapping(value = "/login")
-  public ApiResponse login(@RequestBody UserLoginRequestVO userLoginRequestVO) throws Exception {
+  public CommonApiResponse login(@RequestBody UserLoginRequestVO userLoginRequestVO)
+      throws HttpStatusCodeException {
     log.info("Login Requesnt => " + userLoginRequestVO.toString());
     UserVO userVO = userService.login(userLoginRequestVO);
 
     if (userVO == null) {
-      throw new ApiException(ErrorCode.NOT_EXISTING_USER_EXCEPTION);
+      throw new ApiException(ErrorCode.NotExistingUserException);
     }
 
     // session 적용 시 userId session에 저장하는 로직 구현 필요
     try {
-      return new ApiResponse<>(ResultCode.Success, userVO);
-    } catch (ApiException e) {
-      throw new ApiException(ErrorCode.InternalServerError);
+      return CommonApiResponse.builder()
+          .status(ResultCode.Success.getStatus())
+          .code(ResultCode.Success.getCode())
+          .message(ResultCode.Success.getMessage())
+          .build();
     } catch (Exception e) {
-      throw new Exception(e);
+      return CommonApiResponse.builder()
+          .status(ErrorCode.InternalServerError.getStatus())
+          .code(ErrorCode.InternalServerError.getCode())
+          .message(e.getMessage())
+          .build();
     }
   }
 
   @PostMapping(value = "/init-password")
-  public ApiResponse initPassword(@RequestBody UserPasswordUpdateVO userPasswordUpdateVO)
-      throws Exception {
+  public CommonApiResponse initPassword(@RequestBody UserPasswordUpdateVO userPasswordUpdateVO)
+      throws HttpStatusCodeException {
     userService.updatePassword(userPasswordUpdateVO);
 
     try {
-      return new ApiResponse<>(ResultCode.Success);
-    } catch (ApiException e) {
-      throw new ApiException(ErrorCode.InternalServerError);
+      return CommonApiResponse.builder()
+          .status(ResultCode.Success.getStatus())
+          .code(ResultCode.Success.getCode())
+          .message(ResultCode.Success.getMessage())
+          .build();
     } catch (Exception e) {
-      throw new Exception(e);
+      return CommonApiResponse.builder()
+          .status(ErrorCode.InternalServerError.getStatus())
+          .message(e.getMessage())
+          .build();
     }
   }
 
   @PostMapping(value = "/check-nickname")
-  public ApiResponse checkNickname(@RequestParam String nickname) throws Exception {
+  public CommonApiResponse checkNickname(@RequestParam String nickname)
+      throws HttpStatusCodeException {
 
     try {
-      return new ApiResponse<>(ResultCode.Success);
-    } catch (ApiException e) {
-      throw new ApiException(ErrorCode.InternalServerError);
+      // 로직 구현
+      return CommonApiResponse.builder()
+          .status(ResultCode.Success.getStatus())
+          .code(ResultCode.Success.getCode())
+          .message(ResultCode.Success.getMessage())
+          .build();
     } catch (Exception e) {
-      throw new Exception(e);
+      return CommonApiResponse.builder()
+          .status(ErrorCode.InternalServerError.getStatus())
+          .code(ErrorCode.InternalServerError.getCode())
+          .message(e.getMessage())
+          .build();
     }
   }
 }
