@@ -30,7 +30,7 @@ public class BookController {
       BookVO book = bookService.getBookById(bookId);
       return ResponseEntity.ok(CommonApiResponse.of(ResultCode.Success, book));
     } catch (ApiException e) {
-      throw new ApiException(ErrorCode.InternalServerError);
+      throw new ApiException(ErrorCode.INTERNAL_SERVER_ERROR);
     } catch (Exception e) {
       throw new Exception(e);
     }
@@ -43,7 +43,7 @@ public class BookController {
       List<BookVO> bookList = bookService.getBookList();
       return ResponseEntity.ok(CommonApiResponse.of(ResultCode.Success, bookList));
     } catch (ApiException e) {
-      throw new ApiException(ErrorCode.InternalServerError);
+      throw new ApiException(ErrorCode.INTERNAL_SERVER_ERROR);
     } catch (Exception e) {
       throw new Exception(e);
     }
@@ -53,7 +53,7 @@ public class BookController {
   public ResponseEntity<CommonApiResponse> createBook(@RequestBody BookVO bookVO) throws Exception {
     try {
       if (bookService.getBookById(bookVO.getBookId()) != null) {
-        throw new ApiException(ErrorCode.InternalServerError);
+        throw new ApiException(ErrorCode.INTERNAL_SERVER_ERROR);
       }
       bookService.createBook(bookVO);
       return ResponseEntity.ok(CommonApiResponse.of(ResultCode.Success, bookVO));
@@ -67,12 +67,12 @@ public class BookController {
       @PathVariable(value = "bookId") Long bookId, @RequestBody BookVO bookVO) throws Exception {
     try {
       if (bookService.getBookById(bookId) == null) {
-        throw new ApiException(ErrorCode.InternalServerError);
+        throw new ApiException(ErrorCode.INTERNAL_SERVER_ERROR);
       }
       bookService.updateBook(bookVO);
       return ResponseEntity.ok(CommonApiResponse.of(ResultCode.Success, bookVO));
     } catch (Exception e) {
-      throw new ApiException(ErrorCode.InternalServerError);
+      throw new ApiException(ErrorCode.INTERNAL_SERVER_ERROR);
     }
   }
 
@@ -81,12 +81,12 @@ public class BookController {
       @PathVariable(value = "bookId") Long bookId) throws Exception {
     try {
       if (bookService.getBookById(bookId) == null) {
-        throw new ApiException(ErrorCode.InternalServerError);
+        throw new ApiException(ErrorCode.INTERNAL_SERVER_ERROR);
       }
       List<ReviewVO> reviewList = bookService.getReviewListByBookId(bookId);
       return ResponseEntity.ok(CommonApiResponse.of(ResultCode.Success, reviewList));
     } catch (Exception e) {
-      throw new ApiException(ErrorCode.InternalServerError);
+      throw new ApiException(ErrorCode.INTERNAL_SERVER_ERROR);
     }
   }
 }

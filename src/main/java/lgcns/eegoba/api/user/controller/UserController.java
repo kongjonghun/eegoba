@@ -32,8 +32,8 @@ public class UserController {
           .build();
     } catch (Exception e) {
       return CommonApiResponse.builder()
-          .status(ErrorCode.InternalServerError.getStatus())
-          .code(ErrorCode.InternalServerError.getCode())
+          .status(ErrorCode.INTERNAL_SERVER_ERROR.getStatus())
+          .code(ErrorCode.INTERNAL_SERVER_ERROR.getCode())
           .message(e.getMessage())
           .build();
     }
@@ -46,7 +46,7 @@ public class UserController {
     UserVO userVO = userService.login(userLoginRequestVO);
 
     if (userVO == null) {
-      throw new ApiException(ErrorCode.NotExistingUserException);
+      throw new ApiException(ErrorCode.NOT_EXISTING_USER_EXCEPTION);
     }
 
     // session 적용 시 userId session에 저장하는 로직 구현 필요
@@ -58,8 +58,8 @@ public class UserController {
           .build();
     } catch (Exception e) {
       return CommonApiResponse.builder()
-          .status(ErrorCode.InternalServerError.getStatus())
-          .code(ErrorCode.InternalServerError.getCode())
+          .status(ErrorCode.INTERNAL_SERVER_ERROR.getStatus())
+          .code(ErrorCode.INTERNAL_SERVER_ERROR.getCode())
           .message(e.getMessage())
           .build();
     }
@@ -78,7 +78,7 @@ public class UserController {
           .build();
     } catch (Exception e) {
       return CommonApiResponse.builder()
-          .status(ErrorCode.InternalServerError.getStatus())
+          .status(ErrorCode.INTERNAL_SERVER_ERROR.getStatus())
           .message(e.getMessage())
           .build();
     }
@@ -97,8 +97,8 @@ public class UserController {
           .build();
     } catch (Exception e) {
       return CommonApiResponse.builder()
-          .status(ErrorCode.InternalServerError.getStatus())
-          .code(ErrorCode.InternalServerError.getCode())
+          .status(ErrorCode.INTERNAL_SERVER_ERROR.getStatus())
+          .code(ErrorCode.INTERNAL_SERVER_ERROR.getCode())
           .message(e.getMessage())
           .build();
     }
