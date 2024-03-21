@@ -96,12 +96,12 @@ public class BookController {
   @PostMapping(value = "/create")
   public ResponseEntity<CommonApiResponse> createBook(@RequestBody BookVO bookVO) throws Exception {
     try {
-      if (ValidationUtil.isNotEmpty(bookService.getBookById(bookVO.getBookId()))) {
-        throw new ApiException(ErrorCode.BadRequest);
-      }
       int createdBookCnt = bookService.createBook(bookVO);
+      if (createdBookCnt == 0) {
+        throw new ApiException(ErrorCode.InternalServerError);
+      }
       return ResponseEntity.status(ResultCode.Created.getStatus())
-          .body(CommonApiResponse.of(ResultCode.Created, createdBookCnt));
+          .body(CommonApiResponse.of(ResultCode.Created, bookVO.getBookId()));
     } catch (Exception e) {
       throw new Exception(e);
     }
@@ -126,7 +126,10 @@ public class BookController {
         throw new ApiException(ErrorCode.NotFound);
       }
       int updatedBookCnt = bookService.updateBook(bookVO);
-      return ResponseEntity.ok(CommonApiResponse.of(ResultCode.Success, updatedBookCnt));
+      if (updatedBookCnt == 0) {
+        throw new ApiException(ErrorCode.InternalServerError);
+      }
+      return ResponseEntity.ok(CommonApiResponse.of(ResultCode.Success, bookId));
     } catch (Exception e) {
       throw new ApiException(ErrorCode.InternalServerError);
     }
