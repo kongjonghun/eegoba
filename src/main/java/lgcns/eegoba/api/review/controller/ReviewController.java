@@ -17,6 +17,7 @@ import lgcns.eegoba.common.response.CommonApiResponse;
 import lgcns.eegoba.common.utils.ValidationUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @Slf4j
@@ -43,11 +44,11 @@ public class ReviewController {
         content = @Content(schema = @Schema(implementation = CommonApiResponse.class)))
   })
   @GetMapping("")
-  public CommonApiResponse getReviewList() throws Exception {
+  public ResponseEntity<CommonApiResponse> getReviewList() throws Exception {
     try {
       List<ReviewVO> reviewList = reviewService.getReviewList();
 
-      return new CommonApiResponse<>(ResultCode.Success, reviewList);
+      return ResponseEntity.ok(CommonApiResponse.of(ResultCode.Success, reviewList));
     } catch (ApiException e) {
       throw new ApiException(ErrorCode.InternalServerError);
     } catch (Exception e) {
@@ -70,14 +71,15 @@ public class ReviewController {
         content = @Content(schema = @Schema(implementation = CommonApiResponse.class)))
   })
   @GetMapping("/{reviewId}")
-  public CommonApiResponse getReviewById(@PathVariable Long reviewId) throws Exception {
+  public ResponseEntity<CommonApiResponse> getReviewById(@PathVariable Long reviewId)
+      throws Exception {
     try {
       ReviewVO reviewVO = reviewService.getReviewById(reviewId);
       if (ValidationUtil.isEmpty(reviewVO)) {
         throw new ApiException(ErrorCode.NotFound);
       }
 
-      return new CommonApiResponse<>(ResultCode.Success, reviewVO);
+      return ResponseEntity.ok(CommonApiResponse.of(ResultCode.Success, reviewVO));
     } catch (ApiException e) {
       throw new ApiException(ErrorCode.InternalServerError);
     } catch (Exception e) {
@@ -108,7 +110,7 @@ public class ReviewController {
         content = @Content(schema = @Schema(implementation = CommonApiResponse.class)))
   })
   @GetMapping("/user")
-  public CommonApiResponse getReviewListByUserId(
+  public ResponseEntity<CommonApiResponse> getReviewListByUserId(
       @Parameter(description = "사용자ID", required = true)
           @RequestParam(value = "userId", required = false)
           Long userId)
@@ -118,7 +120,7 @@ public class ReviewController {
     try {
       List<ReviewVO> reviewList = reviewService.getReviewListByUserId(userId);
 
-      return new CommonApiResponse<>(ResultCode.Success, reviewList);
+      return ResponseEntity.ok(CommonApiResponse.of(ResultCode.Success, reviewList));
     } catch (ApiException e) {
       throw new ApiException(ErrorCode.InternalServerError);
     } catch (Exception e) {
@@ -141,14 +143,16 @@ public class ReviewController {
         content = @Content(schema = @Schema(implementation = CommonApiResponse.class)))
   })
   @PostMapping("/create")
-  public CommonApiResponse createReview(@RequestBody ReviewVO reviewVO) throws Exception {
+  public ResponseEntity<CommonApiResponse> createReview(@RequestBody ReviewVO reviewVO)
+      throws Exception {
     try {
-      if (ValidationUtil.isNotEmpty(reviewService.getReviewById(reviewVO.getReviewId()))) {
+      if (ValidationUtil.isNotEmpty(reviewVO)) {
         throw new ApiException(ErrorCode.BadRequest);
       }
       int newReviewCnt = reviewService.createReview(reviewVO);
 
-      return new CommonApiResponse<>(ResultCode.Success, newReviewCnt);
+      return ResponseEntity.status(ResultCode.Created.getStatus())
+          .body(CommonApiResponse.of(ResultCode.Success, newReviewCnt));
     } catch (ApiException e) {
       throw new ApiException(ErrorCode.InternalServerError);
     } catch (Exception e) {
@@ -168,14 +172,15 @@ public class ReviewController {
         content = @Content(schema = @Schema(implementation = CommonApiResponse.class)))
   })
   @PutMapping("/update")
-  public CommonApiResponse updateReview(@RequestBody ReviewVO reviewVO) throws Exception {
+  public ResponseEntity<CommonApiResponse> updateReview(@RequestBody ReviewVO reviewVO)
+      throws Exception {
     try {
       if (ValidationUtil.isEmpty(reviewService.getReviewById(reviewVO.getReviewId()))) {
         throw new ApiException(ErrorCode.NotFound);
       }
       int updatedReviewCnt = reviewService.updateReview(reviewVO);
 
-      return new CommonApiResponse<>(ResultCode.Success, updatedReviewCnt);
+      return ResponseEntity.ok(CommonApiResponse.of(ResultCode.Success, updatedReviewCnt));
     } catch (ApiException e) {
       throw new ApiException(ErrorCode.InternalServerError);
     } catch (Exception e) {
@@ -195,11 +200,12 @@ public class ReviewController {
         content = @Content(schema = @Schema(implementation = CommonApiResponse.class)))
   })
   @PostMapping("/delete/{reviewId}")
-  public CommonApiResponse deleteReview(@PathVariable Long reviewId) throws Exception {
+  public ResponseEntity<CommonApiResponse> deleteReview(@PathVariable Long reviewId)
+      throws Exception {
     try {
       int deletedReviewCnt = reviewService.deleteReview(reviewId);
 
-      return new CommonApiResponse<>(ResultCode.Success, deletedReviewCnt);
+      return ResponseEntity.ok(CommonApiResponse.of(ResultCode.Success, deletedReviewCnt));
     } catch (ApiException e) {
       throw new ApiException(ErrorCode.InternalServerError);
     } catch (Exception e) {
