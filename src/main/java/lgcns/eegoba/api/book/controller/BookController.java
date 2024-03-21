@@ -28,7 +28,7 @@ public class BookController {
       throws Exception {
     try {
       BookVO book = bookService.getBookById(bookId);
-      return ResponseEntity.ok(CommonApiResponse.of(ResultCode.Success, book));
+      return ResponseEntity.ok(CommonApiResponse.of(ResultCode.SUCCESS, book));
     } catch (ApiException e) {
       throw new ApiException(ErrorCode.INTERNAL_SERVER_ERROR);
     } catch (Exception e) {
@@ -41,7 +41,7 @@ public class BookController {
       HttpServletRequest request, HttpServletResponse response) throws Exception {
     try {
       List<BookVO> bookList = bookService.getBookList();
-      return ResponseEntity.ok(CommonApiResponse.of(ResultCode.Success, bookList));
+      return ResponseEntity.ok(CommonApiResponse.of(ResultCode.SUCCESS, bookList));
     } catch (ApiException e) {
       throw new ApiException(ErrorCode.INTERNAL_SERVER_ERROR);
     } catch (Exception e) {
@@ -56,7 +56,7 @@ public class BookController {
         throw new ApiException(ErrorCode.INTERNAL_SERVER_ERROR);
       }
       bookService.createBook(bookVO);
-      return ResponseEntity.ok(CommonApiResponse.of(ResultCode.Success, bookVO));
+      return ResponseEntity.ok(CommonApiResponse.of(ResultCode.SUCCESS, bookVO));
     } catch (Exception e) {
       throw new Exception(e);
     }
@@ -70,7 +70,7 @@ public class BookController {
         throw new ApiException(ErrorCode.INTERNAL_SERVER_ERROR);
       }
       bookService.updateBook(bookVO);
-      return ResponseEntity.ok(CommonApiResponse.of(ResultCode.Success, bookVO));
+      return ResponseEntity.ok(CommonApiResponse.of(ResultCode.SUCCESS, bookVO));
     } catch (Exception e) {
       throw new ApiException(ErrorCode.INTERNAL_SERVER_ERROR);
     }
@@ -84,7 +84,7 @@ public class BookController {
         throw new ApiException(ErrorCode.INTERNAL_SERVER_ERROR);
       }
       List<ReviewVO> reviewList = bookService.getReviewListByBookId(bookId);
-      return ResponseEntity.ok(CommonApiResponse.of(ResultCode.Success, reviewList));
+      return ResponseEntity.ok(CommonApiResponse.of(ResultCode.SUCCESS, reviewList));
     } catch (Exception e) {
       throw new ApiException(ErrorCode.INTERNAL_SERVER_ERROR);
     }

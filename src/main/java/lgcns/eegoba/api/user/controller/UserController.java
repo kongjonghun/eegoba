@@ -26,9 +26,9 @@ public class UserController {
     userService.join(userVO);
     try {
       return CommonApiResponse.builder()
-          .status(ResultCode.Success.getStatus())
-          .code(ResultCode.Success.getCode())
-          .message(ResultCode.Success.getMessage())
+          .status(ResultCode.SUCCESS.getStatus())
+          .code(ResultCode.SUCCESS.getCode())
+          .message(ResultCode.SUCCESS.getMessage())
           .build();
     } catch (Exception e) {
       return CommonApiResponse.builder()
@@ -52,9 +52,9 @@ public class UserController {
     // session 적용 시 userId session에 저장하는 로직 구현 필요
     try {
       return CommonApiResponse.builder()
-          .status(ResultCode.Success.getStatus())
-          .code(ResultCode.Success.getCode())
-          .message(ResultCode.Success.getMessage())
+          .status(ResultCode.SUCCESS.getStatus())
+          .code(ResultCode.SUCCESS.getCode())
+          .message(ResultCode.SUCCESS.getMessage())
           .build();
     } catch (Exception e) {
       return CommonApiResponse.builder()
@@ -72,9 +72,9 @@ public class UserController {
 
     try {
       return CommonApiResponse.builder()
-          .status(ResultCode.Success.getStatus())
-          .code(ResultCode.Success.getCode())
-          .message(ResultCode.Success.getMessage())
+          .status(ResultCode.SUCCESS.getStatus())
+          .code(ResultCode.SUCCESS.getCode())
+          .message(ResultCode.SUCCESS.getMessage())
           .build();
     } catch (Exception e) {
       return CommonApiResponse.builder()
@@ -91,9 +91,9 @@ public class UserController {
     try {
       // 로직 구현
       return CommonApiResponse.builder()
-          .status(ResultCode.Success.getStatus())
-          .code(ResultCode.Success.getCode())
-          .message(ResultCode.Success.getMessage())
+          .status(ResultCode.SUCCESS.getStatus())
+          .code(ResultCode.SUCCESS.getCode())
+          .message(ResultCode.SUCCESS.getMessage())
           .build();
     } catch (Exception e) {
       return CommonApiResponse.builder()
