@@ -12,9 +12,9 @@ public interface BookMapper {
 
   List<BookVO> getBookList();
 
-  void insertBook(BookVO bookVO);
+  int insertBook(BookVO bookVO);
 
-  void updateBook(BookVO bookVO);
+  int updateBook(BookVO bookVO);
 
   List<ReviewVO> getBookReviewListByBookId(Long bookId);
 }

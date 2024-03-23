@@ -20,12 +20,12 @@ public class BookService {
     return bookMapper.getBookList();
   }
 
-  public void createBook(BookVO bookVO) {
-    bookMapper.insertBook(bookVO);
+  public int createBook(BookVO bookVO) {
+    return bookMapper.insertBook(bookVO);
   }
 
-  public void updateBook(BookVO bookVO) {
-    bookMapper.updateBook(bookVO);
+  public int updateBook(BookVO bookVO) {
+    return bookMapper.updateBook(bookVO);
   }
 
   public List<ReviewVO> getReviewListByBookId(Long bookId) {
