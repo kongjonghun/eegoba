@@ -4,7 +4,7 @@
 <configuration>
     <settings>
         <setting name="cacheEnabled" value="false"/>
-        <setting name="useGeneratedKeys" value="false"/>
+        <setting name="useGeneratedKeys" value="true"/>
         <setting name="mapUnderscoreToCamelCase" value="true"/>
         <setting name="defaultStatementTimeout" value="30"/>
     </settings>
