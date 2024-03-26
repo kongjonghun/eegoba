@@ -41,6 +41,8 @@ dependencies {
 	implementation group: 'org.mindrot', name: 'jbcrypt', version: '0.3m'
 	// Swagger
 	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0'
+	// email API
+	implementation 'org.springframework.boot:spring-boot-starter-mail:3.2.4'
 
 
 	//	// jpa

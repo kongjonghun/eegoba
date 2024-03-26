@@ -25,7 +25,13 @@ public enum ErrorCode {
   AccessDeniedException(HttpStatus.UNAUTHORIZED.value(), "E0003", "비밀번호가 일치하지 않습니다."),
   PasswordValidationFailed(HttpStatus.UNAUTHORIZED.value(), "E0004", "이전과 동일한 비밀번호로 변경할 수 없습니다."),
   Security01(HttpStatus.UNAUTHORIZED.value(), "S0001", "권한이 없습니다."),
-  ;
+
+  /* Mail Error */
+  MAIL_SERVER_EXCEPTION(
+          HttpStatus.INTERNAL_SERVER_ERROR.value(), "500", "이메일 전송에 실패하였습니다."),
+  MAIL_EXISTS_EXCEPTION(
+          HttpStatus.CONFLICT.value(), "409", "이미 인증 요청된 이메일입니다."
+  );
 
   private final int status;
   private final String code;
